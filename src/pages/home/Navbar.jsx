@@ -41,7 +41,7 @@ const Navbar = () => {
             }}
           />
           <h1 class="text-3xl font-bold text-gray-800">
-            Rwanda Housing Authority
+            RHA
           </h1>
         </header>
 

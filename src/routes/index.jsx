@@ -9,6 +9,9 @@ import { ReportsDashboard } from "../pages/reports/ReportsDashboard";
 import { AccountApprovalDashboard } from "../pages/AccountApproval/AccountApprovalDashboard";
 import { BuildingRegulationsDasboard } from "../pages/regulations/BuildingRegulationsDasboard";
 import NotFound from "../pages/NotFound";
+import { FinancingOptions } from "../pages/financing/LoanOption";
+import { MaterialProcurement } from "../pages/procurement/MaterialProcurement";
+import { ReviewRates } from "../pages/review/ReviewRates";
 
 export const AppRoutes = () => {
   return (
@@ -22,6 +25,9 @@ export const AppRoutes = () => {
         <Route path="/users" element={<UsersDashboard />} />
         <Route path="/regulations" element={<BuildingRegulationsDasboard />} />
         <Route path="/reports" element={<ReportsDashboard />} />
+        <Route path="/finance" element={<FinancingOptions />} />
+        <Route path="/materials" element={<MaterialProcurement/>}/>
+        <Route path="/reviews" element={<ReviewRates/>}/>
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

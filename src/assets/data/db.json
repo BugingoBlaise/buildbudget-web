@@ -1,17 +1,83 @@
 {
   "regulations": [
     {
-      "id": "1",
-      "regulationTitle": "Fire Safety Regulations",
-      "regulationDetails": "Ensure all buildings have fire exits and extinguishers",
+      "id": 2,
+      "regulationTitle": "Structural Integrity",
+      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
       "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
     },
     {
-      "id": null,
+      "id": 3,
+      "regulationTitle": "Foundation layering",
+      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
+      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+    },
+    {
+      "id": 4,
+      "regulationTitle": "Structural Integrity",
+      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
+      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+    },
+    {
+      "id": 5,
+      "regulationTitle": "Structural Integrity",
+      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
+      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+    },
+    {
+      "id": 6,
+      "regulationTitle": "Structural Integrity",
+      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
+      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+    },
+    {
+      "id": 7,
+      "regulationTitle": "Structural Integrity",
+      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
+      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+    },
+    {
+      "id": 8,
+      "regulationTitle": "Structural Integrity",
+      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
+      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+    },
+    {
+      "id": 9,
+      "regulationTitle": "Structural Integrity",
+      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
+      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+    },
+    {
+      "id": 10,
+      "regulationTitle": "Structural Integrity",
+      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
+      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+    },
+    {
+      "id": 11,
+      "regulationTitle": "Structural Integrity",
+      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
+      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+    },
+    {
+      "id": 12,
+      "regulationTitle": "Structural Integrity",
+      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
+      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+    },
+    {
+      "id": 13,
+      "regulationTitle": "Structural Integrity",
+      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
+      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+    },
+    {
+      "id": 1726228659597,
       "regulationTitle": "",
       "regulationDetails": "",
-      "regulationImage": null,
-      "": "Testing one two"
+      "regulationImage": {},
+      "": "WORLD"
     }
   ]
 }

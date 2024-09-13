@@ -5,151 +5,194 @@ import Modal from "../../components/Modal/index";
 import Input from "../../components/Inputs/index";
 import TextArea from "../../components/Inputs/TextArea";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
+import Pagination from "../../components/pagination/pagination";
+import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
 
 const API_URL = "http://localhost:8000/regulations";
 
 export const BuildingRegulationsDasboard = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const regulationsPerPage = 5;
   const [regulations, setRegulations] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [currentRegulation, setCurrentRegulation] = useState(null);
-  const [newRegulation, setNewRegulation] = useState({
-    id: null,
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState({
+    id: "",
     regulationTitle: "",
     regulationDetails: "",
     regulationImage: null,
   });
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const [currentRegulation, setCurrentRegulation] = useState(null);
 
   // Fetch regulations from JSON server
-  const fetchRegulations = async () => {
-    const res = await axios.get(API_URL);
-    setRegulations(res.data);
-  };
-
   useEffect(() => {
-    fetchRegulations();
+    axios.get("http://localhost:8000/regulations").then((res) => {
+      setRegulations(res.data);
+    });
   }, []);
 
-  // Add or update regulation
-  const handleSaveRegulation = async () => {
-    if (newRegulation.id) {
-      // Update existing regulation
-      await axios.put(`${API_URL}/${newRegulation.id}`, newRegulation);
-    } else {
-      // Add new regulation
-      await axios.post(API_URL, newRegulation);
-    }
-    fetchRegulations();
-    setModalOpen(false);
-    resetForm();
+  // Handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Open modal for editing regulation
-  const handleEditRegulation = (regulation) => {
-    setNewRegulation(regulation);
+  // Handle file upload
+  const handleFileUpload = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      regulationImage: e.target.files[0],
+    }));
+  };
+
+  // Open modal for adding or editing regulation
+  const handleAddOrEdit = (regulation = null) => {
+    setEditMode(!!regulation);
+    if (regulation) {
+      setFormData(regulation);
+    } else {
+      setFormData({
+        id: "",
+        regulationTitle: "",
+        regulationDetails: "",
+        regulationImage: null,
+      });
+    }
     setModalOpen(true);
+  };
+
+  // Save new or updated regulation
+  const handleSave = () => {
+    if (editMode) {
+      // Update regulation
+      axios
+        .put(`http://localhost:8000/regulations/${formData.id}`, formData)
+        .then(() => {
+          const updatedRegs = regulations.map((reg) =>
+            reg.id === formData.id ? formData : reg
+          );
+          setRegulations(updatedRegs);
+          setModalOpen(false);
+        });
+    } else {
+      // Add new regulation
+      const newReg = { ...formData, id: Date.now() };
+      axios.post("http://localhost:8000/regulations", newReg).then(() => {
+        setRegulations((prev) => [...prev, newReg]);
+        setModalOpen(false);
+      });
+    }
+  };
+
+  // Confirm deletion modal
+  const handleDeleteConfirm = (regulation) => {
+    setCurrentRegulation(regulation);
+    setDeleteModalOpen(true);
   };
 
   // Delete regulation
-  const handleDeleteRegulation = async (id) => {
-    await axios.delete(`${API_URL}/${id}`);
-    fetchRegulations();
-  };
-
-  // Pagination Logic
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentRegulations = regulations.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-
-  const resetForm = () => {
-    setNewRegulation({
-      id: null,
-      regulationTitle: "",
-      regulationDetails: "",
-      regulationImage: null,
-    });
-  };
-
-  const openModal = () => {
-    setModalOpen(true);
-    resetForm();
-  };
-
-  const handleChange = (e) => {
-    setNewRegulation({
-      ...newRegulation,
-      [e.target.name]: e.target.value,
-    });
+  const handleDelete = () => {
+    axios
+      .delete(`http://localhost:8000/regulations/${currentRegulation.id}`)
+      .then(() => {
+        setRegulations((prev) =>
+          prev.filter((reg) => reg.id !== currentRegulation.id)
+        );
+        setDeleteModalOpen(false);
+      });
   };
 
   return (
-    <ContainerHolder>
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Manage Building Regulations</h1>
-        <Button value="Add Regulation" onClick={openModal} />
+    <ContainerHolder className="flex flex-col p-6 bg-gray-100 min-h-screen">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Building Regulations</h1>
+        <Button value="Add Regulation" onClick={() => handleAddOrEdit()} />
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-4">
-        {currentRegulations.map((regulation) => (
+      <div className="grid grid-cols-3 gap-4">
+        {regulations.map((regulation) => (
           <div
             key={regulation.id}
-            className="border rounded-lg p-4 shadow-lg flex justify-between items-center"
+            className="bg-white rounded-lg shadow-md p-4"
           >
-            <div>
-              <h2 className="text-xl font-bold">
-                {regulation.regulationTitle}
-              </h2>
-              <p>{regulation.regulationDetails}</p>
-            </div>
-            <div className="flex space-x-2">
+            {/* <img
+              src={URL.createObjectURL(regulation.regulationImage)}
+              alt={regulation.regulationTitle}
+              className="w-full h-48 object-cover mb-4 rounded-md"
+            /> */}
+            <h3 className="text-xl font-bold">{regulation.regulationTitle}</h3>
+            <p className="text-sm text-gray-600 mt-2">
+              {regulation.regulationDetails}
+            </p>
+            <div className="mt-4 flex justify-between">
               <Button
                 value="Update"
-                className="bg-blue-500"
-                onClick={() => handleEditRegulation(regulation)}
+                onClick={() => handleAddOrEdit(regulation)}
               />
               <Button
                 value="Delete"
-                className="bg-red-500"
-                onClick={() => handleDeleteRegulation(regulation.id)}
+                className="bg-red-300 text-white"
+                onClick={() => handleDeleteConfirm(regulation)}
               />
             </div>
           </div>
         ))}
       </div>
 
-      {/* Pagination */}
-      <div className="flex justify-center mt-4">
-        <Button value="Prev" onClick={() => setCurrentPage(currentPage - 1)} />
-        <span className="mx-2">{currentPage}</span>
-        <Button value="Next" onClick={() => setCurrentPage(currentPage + 1)} />
-      </div>
+      {/* Pagination Component */}
+      <Pagination
+        previousLabel={<ChevronLeftIcon className="h-5 w-5" />}
+        nextLabel={<ChevronRightIcon className="h-5 w-5" />}
+        pageCount={5} // Example page count
+      />
 
-      {/* Modal for adding/updating regulation */}
+      {/* Add/Edit Regulation Modal */}
       {modalOpen && (
         <Modal toggleFunction={() => setModalOpen(false)}>
-          <h2 className="text-xl font-bold mb-4">
-            {newRegulation.id ? "Update Regulation" : "Add Regulation"}
+          <h2 className="text-lg font-bold mb-4">
+            {editMode ? "Update Regulation" : "Add Regulation"}
           </h2>
           <Input
-            placeholder="Regulation Title"
             name="regulationTitle"
-            value={newRegulation.regulationTitle}
-            onChange={handleChange}
-            required
+            placeholder="Regulation Title"
+            value={formData.regulationTitle}
+            onChange={handleInputChange}
           />
           <TextArea
-            placeholder="Regulation Details"
             name="regulationDetails"
-            value={newRegulation.regulationDetails}
-            onChange={handleChange}
-            required
+            placeholder="Regulation Details"
+            value={formData.regulationDetails}
+            onChange={handleInputChange}
           />
-          <Button value="Save" onClick={handleSaveRegulation} />
+          <input type="file" onChange={handleFileUpload} />
+
+          <Button
+            value={editMode ? "Update" : "Save"}
+            onClick={handleSave}
+            className="mt-4"
+          />
+        </Modal>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteModalOpen && (
+        <Modal toggleFunction={() => setDeleteModalOpen(false)}>
+          <h2 className="text-lg font-bold mb-4">Confirm Delete</h2>
+          <p>Are you sure you want to delete this regulation?</p>
+          <div className="mt-4 flex justify-end">
+            <Button
+              value="Cancel"
+              className="mr-4"
+              onClick={() => setDeleteModalOpen(false)}
+            />
+            <Button
+              value="Delete"
+              className="bg-red-500"
+              onClick={handleDelete}
+            />
+          </div>
         </Modal>
       )}
     </ContainerHolder>

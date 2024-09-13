@@ -67,15 +67,16 @@ export const BuildingRegulationsDasboard = () => {
   const handleSave = () => {
     if (editMode) {
       // Update regulation
-      axios
-        .put(`http://localhost:8000/regulations/${formData.id}`, formData)
-        .then(() => {
-          const updatedRegs = regulations.map((reg) =>
-            reg.id === formData.id ? formData : reg
-          );
-          setRegulations(updatedRegs);
-          setModalOpen(false);
-        });
+      fetch(`http://localhost:8000/regulations/${formData.id}`, formData, {
+        method: POST,
+        body: JSON.stringify(formatData.id),
+      }).then(() => {
+        const updatedRegs = regulations.map((reg) =>
+          reg.id === formData.id ? formData : reg
+        );
+        setRegulations(updatedRegs);
+        setModalOpen(false);
+      });
     } else {
       // Add new regulation
       const newReg = { ...formData, id: count() };
@@ -121,7 +122,7 @@ export const BuildingRegulationsDasboard = () => {
             className="bg-white rounded-lg shadow-md p-4"
           >
             <img
-              src={``}
+              src={`https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw`}
               alt={regulation.regulationTitle}
               className="w-full h-48 object-cover mb-4 rounded-md"
             />
@@ -129,6 +130,7 @@ export const BuildingRegulationsDasboard = () => {
             <p className="text-sm text-gray-600 mt-2">
               {regulation.regulationDetails}
             </p>
+
             <div className="mt-4 flex justify-between">
               <Button
                 value="Update"
@@ -136,7 +138,7 @@ export const BuildingRegulationsDasboard = () => {
               />
               <Button
                 value="Delete"
-                className="bg-red-300 text-white"
+                className="bg-yellow-300 text-white"
                 onClick={() => handleDeleteConfirm(regulation)}
               />
             </div>

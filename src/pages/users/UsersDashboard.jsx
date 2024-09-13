@@ -42,7 +42,6 @@ export const UsersDashboard = () => {
   );
 
   const { pageIndex, globalFilter } = state;
-
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       {/* Search Filter */}
@@ -55,7 +54,6 @@ export const UsersDashboard = () => {
           placeholder="Search users..."
         />
       </div>
-
       {/* Table */}
       <div className="overflow-x-auto">
         <table

@@ -28,7 +28,7 @@ export const BuildingRegulationsDasboard = () => {
 
   // Fetch regulations from JSON server
   useEffect(() => {
-    axios.get("http://localhost:8000/regulations").then((res) => {
+    axios.get(API_URL).then((res) => {
       setRegulations(res.data);
     });
   }, []);
@@ -78,14 +78,17 @@ export const BuildingRegulationsDasboard = () => {
         });
     } else {
       // Add new regulation
-      const newReg = { ...formData, id: Date.now() };
+      const newReg = { ...formData, id: count() };
       axios.post("http://localhost:8000/regulations", newReg).then(() => {
         setRegulations((prev) => [...prev, newReg]);
         setModalOpen(false);
       });
     }
   };
-
+  function count() {
+    i = 1;
+    return i + 1;
+  }
   // Confirm deletion modal
   const handleDeleteConfirm = (regulation) => {
     setCurrentRegulation(regulation);
@@ -117,11 +120,11 @@ export const BuildingRegulationsDasboard = () => {
             key={regulation.id}
             className="bg-white rounded-lg shadow-md p-4"
           >
-            {/* <img
-              src={URL.createObjectURL(regulation.regulationImage)}
+            <img
+              src={``}
               alt={regulation.regulationTitle}
               className="w-full h-48 object-cover mb-4 rounded-md"
-            /> */}
+            />
             <h3 className="text-xl font-bold">{regulation.regulationTitle}</h3>
             <p className="text-sm text-gray-600 mt-2">
               {regulation.regulationDetails}
@@ -145,7 +148,7 @@ export const BuildingRegulationsDasboard = () => {
       <Pagination
         previousLabel={<ChevronLeftIcon className="h-5 w-5" />}
         nextLabel={<ChevronRightIcon className="h-5 w-5" />}
-        pageCount={5} // Example page count
+        pageCount={3} // Example page count
       />
 
       {/* Add/Edit Regulation Modal */}

@@ -1,0 +1,17 @@
+{
+  "regulations": [
+    {
+      "id": "1",
+      "regulationTitle": "Fire Safety Regulations",
+      "regulationDetails": "Ensure all buildings have fire exits and extinguishers",
+      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+    },
+    {
+      "id": null,
+      "regulationTitle": "",
+      "regulationDetails": "",
+      "regulationImage": null,
+      "": "Testing one two"
+    }
+  ]
+}

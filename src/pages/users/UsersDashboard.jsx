@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
-import MOCK_DATA from "../../assets/data/MOCK_DATA.json";
+import MOCK_DATA from "../../assets/data/db.json";
+
 import {
   useTable,
   useGlobalFilter,
@@ -15,7 +16,7 @@ import COLUMNS from "../../constants/columns";
 
 export const UsersDashboard = () => {
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => MOCK_DATA, []);
+  const data = useMemo(() => MOCK_DATA.users, []);
   const {
     getTableProps,
     getTableBodyProps,
@@ -27,9 +28,10 @@ export const UsersDashboard = () => {
     previousPage,
     canNextPage,
     canPreviousPage,
+    gotoPage,
     pageOptions,
     state,
-    gotoPage,
+
     pageCount,
   } = useTable(
     {
@@ -121,7 +123,6 @@ export const UsersDashboard = () => {
           </tbody>
         </table>
       </div>
-
       {/* Pagination */}
       <div className="mt-4 flex items-center justify-center">
         <button

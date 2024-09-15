@@ -1,83 +1,524 @@
 {
   "regulations": [
     {
-      "id": 2,
+      "id": "2",
       "regulationTitle": "Structural Integrity",
       "regulationDetails": "All buildings must adhere to the standards for structural stability.",
       "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
     },
     {
-      "id": 3,
-      "regulationTitle": "Foundation layering",
-      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
-      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
-    },
-    {
-      "id": 4,
+      "id": "4",
       "regulationTitle": "Structural Integrity",
       "regulationDetails": "All buildings must adhere to the standards for structural stability.",
       "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
     },
     {
-      "id": 5,
+      "id": "5",
       "regulationTitle": "Structural Integrity",
       "regulationDetails": "All buildings must adhere to the standards for structural stability.",
       "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "first_name": "Alejandrina",
+      "last_name": "Boyd",
+      "email": "aboyd0@t.co",
+      "date_of_birth": "3/5/2021",
+      "age": 40,
+      "country": "Panama",
+      "phone": "278-823-1909"
     },
     {
-      "id": 6,
-      "regulationTitle": "Structural Integrity",
-      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
-      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+      "id": "2",
+      "first_name": "Ives",
+      "last_name": "Headley",
+      "email": "iheadley1@wired.com",
+      "date_of_birth": "9/3/2021",
+      "age": 31,
+      "country": "Indonesia",
+      "phone": "947-404-8295"
     },
     {
-      "id": 7,
-      "regulationTitle": "Structural Integrity",
-      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
-      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+      "id": "3",
+      "first_name": "Lodovico",
+      "last_name": "Grafhom",
+      "email": "lgrafhom2@nba.com",
+      "date_of_birth": "9/11/2022",
+      "age": 42,
+      "country": "Brazil",
+      "phone": "979-534-5050"
     },
     {
-      "id": 8,
-      "regulationTitle": "Structural Integrity",
-      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
-      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+      "id": "4",
+      "first_name": "Cirilo",
+      "last_name": "Mulligan",
+      "email": "cmulligan3@youtu.be",
+      "date_of_birth": "12/17/2022",
+      "age": 33,
+      "country": "France",
+      "phone": "882-631-1200"
     },
     {
-      "id": 9,
-      "regulationTitle": "Structural Integrity",
-      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
-      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+      "id": "5",
+      "first_name": "Wilona",
+      "last_name": "Brunroth",
+      "email": "wbrunroth4@over-blog.com",
+      "date_of_birth": "6/10/2023",
+      "age": 56,
+      "country": "Indonesia",
+      "phone": "985-479-2447"
     },
     {
-      "id": 10,
-      "regulationTitle": "Structural Integrity",
-      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
-      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+      "id": "6",
+      "first_name": "Glynda",
+      "last_name": "Moring",
+      "email": "gmoring5@t-online.de",
+      "date_of_birth": "6/14/2021",
+      "age": 41,
+      "country": "Russia",
+      "phone": "353-189-4535"
     },
     {
-      "id": 11,
-      "regulationTitle": "Structural Integrity",
-      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
-      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+      "id": "7",
+      "first_name": "Morrie",
+      "last_name": "De Bell",
+      "email": "mdebell6@cnet.com",
+      "date_of_birth": "4/26/2021",
+      "age": 43,
+      "country": "Kazakhstan",
+      "phone": "379-674-3927"
     },
     {
-      "id": 12,
-      "regulationTitle": "Structural Integrity",
-      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
-      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+      "id": "8",
+      "first_name": "Cathryn",
+      "last_name": "Lambirth",
+      "email": "clambirth7@time.com",
+      "date_of_birth": "10/5/2022",
+      "age": 20,
+      "country": "Philippines",
+      "phone": "469-886-4439"
     },
     {
-      "id": 13,
-      "regulationTitle": "Structural Integrity",
-      "regulationDetails": "All buildings must adhere to the standards for structural stability.",
-      "regulationImage": "https://unsplash.com/photos/the-ceiling-of-a-building-with-a-circular-window-wYXA_DSKqrw"
+      "id": "9",
+      "first_name": "Max",
+      "last_name": "Abel",
+      "email": "mabel8@amazon.com",
+      "date_of_birth": "8/1/2023",
+      "age": 38,
+      "country": "Portugal",
+      "phone": "133-444-1243"
     },
     {
-      "id": 1726228659597,
-      "regulationTitle": "",
-      "regulationDetails": "",
-      "regulationImage": {},
-      "": "WORLD"
+      "id": "10",
+      "first_name": "Jeniece",
+      "last_name": "Benardette",
+      "email": "jbenardette9@google.co.uk",
+      "date_of_birth": "4/14/2023",
+      "age": 20,
+      "country": "Russia",
+      "phone": "842-793-5771"
+    },
+    {
+      "id": "11",
+      "first_name": "Marc",
+      "last_name": "Guichard",
+      "email": "mguicharda@last.fm",
+      "date_of_birth": "11/3/2020",
+      "age": 51,
+      "country": "Netherlands",
+      "phone": "858-232-4448"
+    },
+    {
+      "id": "12",
+      "first_name": "Robena",
+      "last_name": "Caveau",
+      "email": "rcaveaub@ning.com",
+      "date_of_birth": "7/17/2022",
+      "age": 57,
+      "country": "Indonesia",
+      "phone": "137-502-8507"
+    },
+    {
+      "id": "13",
+      "first_name": "Claudian",
+      "last_name": "Caird",
+      "email": "ccairdc@timesonline.co.uk",
+      "date_of_birth": "4/15/2021",
+      "age": 30,
+      "country": "Colombia",
+      "phone": "907-125-7343"
+    },
+    {
+      "id": "14",
+      "first_name": "Caro",
+      "last_name": "Ibotson",
+      "email": "cibotsond@soup.io",
+      "date_of_birth": "12/20/2021",
+      "age": 55,
+      "country": "Russia",
+      "phone": "256-480-9555"
+    },
+    {
+      "id": "15",
+      "first_name": "Lavina",
+      "last_name": "Konzelmann",
+      "email": "lkonzelmanne@histats.com",
+      "date_of_birth": "11/21/2022",
+      "age": 38,
+      "country": "Poland",
+      "phone": "730-179-7423"
+    },
+    {
+      "id": "16",
+      "first_name": "Dix",
+      "last_name": "Chattey",
+      "email": "dchatteyf@miitbeian.gov.cn",
+      "date_of_birth": "5/31/2021",
+      "age": 26,
+      "country": "China",
+      "phone": "268-110-4982"
+    },
+    {
+      "id": "17",
+      "first_name": "Dale",
+      "last_name": "Killner",
+      "email": "dkillnerg@hibu.com",
+      "date_of_birth": "10/22/2022",
+      "age": 36,
+      "country": "Russia",
+      "phone": "857-348-2367"
+    },
+    {
+      "id": "18",
+      "first_name": "Art",
+      "last_name": "Larne",
+      "email": "alarneh@ustream.tv",
+      "date_of_birth": "10/12/2021",
+      "age": 43,
+      "country": "Indonesia",
+      "phone": "948-960-0645"
+    },
+    {
+      "id": "19",
+      "first_name": "Georgy",
+      "last_name": "Barnish",
+      "email": "gbarnishi@bbb.org",
+      "date_of_birth": "7/13/2023",
+      "age": 20,
+      "country": "Myanmar",
+      "phone": "298-164-3665"
+    },
+    {
+      "id": "20",
+      "first_name": "Korry",
+      "last_name": "Weed",
+      "email": "kweedj@eepurl.com",
+      "date_of_birth": "6/30/2022",
+      "age": 28,
+      "country": "Russia",
+      "phone": "868-182-5606"
+    },
+    {
+      "id": "21",
+      "first_name": "Carine",
+      "last_name": "Conner",
+      "email": "cconnerk@usda.gov",
+      "date_of_birth": "11/1/2022",
+      "age": 40,
+      "country": "Ukraine",
+      "phone": "768-164-8923"
+    },
+    {
+      "id": "22",
+      "first_name": "Didi",
+      "last_name": "Sokale",
+      "email": "dsokalel@facebook.com",
+      "date_of_birth": "2/15/2022",
+      "age": 18,
+      "country": "Indonesia",
+      "phone": "273-401-9288"
+    },
+    {
+      "id": "23",
+      "first_name": "Curr",
+      "last_name": "Martyntsev",
+      "email": "cmartyntsevm@harvard.edu",
+      "date_of_birth": "6/21/2023",
+      "age": 27,
+      "country": "Japan",
+      "phone": "149-932-3183"
+    },
+    {
+      "id": "24",
+      "first_name": "Wolf",
+      "last_name": "Chinnery",
+      "email": "wchinneryn@stumbleupon.com",
+      "date_of_birth": "10/6/2021",
+      "age": 45,
+      "country": "Indonesia",
+      "phone": "332-971-3867"
+    },
+    {
+      "id": "25",
+      "first_name": "Colby",
+      "last_name": "Heatlie",
+      "email": "cheatlieo@adobe.com",
+      "date_of_birth": "9/14/2022",
+      "age": 50,
+      "country": "United States",
+      "phone": "312-371-9863"
+    },
+    {
+      "id": "26",
+      "first_name": "Elvera",
+      "last_name": "Sarah",
+      "email": "esarahp@nydailynews.com",
+      "date_of_birth": "4/23/2021",
+      "age": 27,
+      "country": "Argentina",
+      "phone": "642-613-3971"
+    },
+    {
+      "id": "27",
+      "first_name": "Abbe",
+      "last_name": "Manzell",
+      "email": "amanzellq@mysql.com",
+      "date_of_birth": "2/7/2021",
+      "age": 39,
+      "country": "Indonesia",
+      "phone": "493-738-7657"
+    },
+    {
+      "id": "28",
+      "first_name": "Elsbeth",
+      "last_name": "Jovasevic",
+      "email": "ejovasevicr@example.com",
+      "date_of_birth": "2/23/2022",
+      "age": 19,
+      "country": "Brazil",
+      "phone": "257-799-8620"
+    },
+    {
+      "id": "29",
+      "first_name": "Bekki",
+      "last_name": "Attoe",
+      "email": "battoes@vimeo.com",
+      "date_of_birth": "12/17/2020",
+      "age": 41,
+      "country": "Afghanistan",
+      "phone": "853-932-3833"
+    },
+    {
+      "id": "30",
+      "first_name": "Diannne",
+      "last_name": "Strafford",
+      "email": "dstraffordt@photobucket.com",
+      "date_of_birth": "1/29/2023",
+      "age": 37,
+      "country": "United Kingdom",
+      "phone": "897-947-5857"
+    },
+    {
+      "id": "31",
+      "first_name": "Anet",
+      "last_name": "Boutcher",
+      "email": "aboutcheru@soup.io",
+      "date_of_birth": "1/15/2021",
+      "age": 35,
+      "country": "Poland",
+      "phone": "419-376-4888"
+    },
+    {
+      "id": "32",
+      "first_name": "Nicki",
+      "last_name": "Bennetts",
+      "email": "nbennettsv@newyorker.com",
+      "date_of_birth": "3/22/2022",
+      "age": 26,
+      "country": "Albania",
+      "phone": "790-985-5750"
+    },
+    {
+      "id": "33",
+      "first_name": "Petronella",
+      "last_name": "Kiff",
+      "email": "pkiffw@guardian.co.uk",
+      "date_of_birth": "2/14/2021",
+      "age": 49,
+      "country": "Russia",
+      "phone": "542-693-9070"
+    },
+    {
+      "id": "34",
+      "first_name": "Karie",
+      "last_name": "Pigden",
+      "email": "kpigdenx@abc.net.au",
+      "date_of_birth": "9/4/2021",
+      "age": 54,
+      "country": "Thailand",
+      "phone": "752-197-6551"
+    },
+    {
+      "id": "35",
+      "first_name": "Jonathan",
+      "last_name": "Brockwell",
+      "email": "jbrockwelly@studiopress.com",
+      "date_of_birth": "9/1/2021",
+      "age": 58,
+      "country": "Indonesia",
+      "phone": "949-229-0897"
+    },
+    {
+      "id": "36",
+      "first_name": "Ingar",
+      "last_name": "Jestico",
+      "email": "ijesticoz@ted.com",
+      "date_of_birth": "12/26/2021",
+      "age": 38,
+      "country": "Indonesia",
+      "phone": "325-620-5428"
+    },
+    {
+      "id": "37",
+      "first_name": "Skye",
+      "last_name": "Thomassin",
+      "email": "sthomassin10@furl.net",
+      "date_of_birth": "5/18/2022",
+      "age": 46,
+      "country": "Dominican Republic",
+      "phone": "843-940-4802"
+    },
+    {
+      "id": "38",
+      "first_name": "Ortensia",
+      "last_name": "Paynes",
+      "email": "opaynes11@themeforest.net",
+      "date_of_birth": "10/20/2022",
+      "age": 47,
+      "country": "France",
+      "phone": "851-667-2843"
+    },
+    {
+      "id": "39",
+      "first_name": "Manya",
+      "last_name": "Cisson",
+      "email": "mcisson12@wp.com",
+      "date_of_birth": "3/27/2023",
+      "age": 36,
+      "country": "Ethiopia",
+      "phone": "769-402-4708"
+    },
+    {
+      "id": "40",
+      "first_name": "Grady",
+      "last_name": "Ondrak",
+      "email": "gondrak13@theatlantic.com",
+      "date_of_birth": "5/9/2022",
+      "age": 40,
+      "country": "Indonesia",
+      "phone": "823-776-3527"
+    },
+    {
+      "id": "41",
+      "first_name": "Maribeth",
+      "last_name": "Fillimore",
+      "email": "mfillimore14@ezinearticles.com",
+      "date_of_birth": "1/29/2022",
+      "age": 39,
+      "country": "Poland",
+      "phone": "570-811-8045"
+    },
+    {
+      "id": "42",
+      "first_name": "Xenia",
+      "last_name": "Purvis",
+      "email": "xpurvis15@youku.com",
+      "date_of_birth": "4/19/2021",
+      "age": 56,
+      "country": "Indonesia",
+      "phone": "412-867-1310"
+    },
+    {
+      "id": "43",
+      "first_name": "Robina",
+      "last_name": "Benneyworth",
+      "email": "rbenneyworth16@issuu.com",
+      "date_of_birth": "6/18/2021",
+      "age": 21,
+      "country": "Palestinian Territory",
+      "phone": "162-742-3414"
+    },
+    {
+      "id": "44",
+      "first_name": "Maryjo",
+      "last_name": "Lapslie",
+      "email": "mlapslie17@rambler.ru",
+      "date_of_birth": "3/25/2023",
+      "age": 55,
+      "country": "Myanmar",
+      "phone": "171-250-2837"
+    },
+    {
+      "id": "45",
+      "first_name": "Domenico",
+      "last_name": "Scarlin",
+      "email": "dscarlin18@hugedomains.com",
+      "date_of_birth": "3/24/2022",
+      "age": 26,
+      "country": "Kosovo",
+      "phone": "164-949-7121"
+    },
+    {
+      "id": "46",
+      "first_name": "Aimee",
+      "last_name": "Mallon",
+      "email": "amallon19@hatena.ne.jp",
+      "date_of_birth": "11/24/2020",
+      "age": 27,
+      "country": "Malaysia",
+      "phone": "653-919-4544"
+    },
+    {
+      "id": "47",
+      "first_name": "Kenon",
+      "last_name": "Saenz",
+      "email": "ksaenz1a@go.com",
+      "date_of_birth": "1/21/2021",
+      "age": 39,
+      "country": "Costa Rica",
+      "phone": "511-581-1548"
+    },
+    {
+      "id": "48",
+      "first_name": "Cordula",
+      "last_name": "Legerwood",
+      "email": "clegerwood1b@businessweek.com",
+      "date_of_birth": "11/25/2021",
+      "age": 19,
+      "country": "Philippines",
+      "phone": "530-934-0983"
+    },
+    {
+      "id": "49",
+      "first_name": "Garvey",
+      "last_name": "Lombard",
+      "email": "glombard1c@creativecommons.org",
+      "date_of_birth": "11/4/2022",
+      "age": 29,
+      "country": "Mexico",
+      "phone": "431-652-8397"
+    },
+    {
+      "id": "50",
+      "first_name": "Sutherlan",
+      "last_name": "Andrysek",
+      "email": "sandrysek1d@tmall.com",
+      "date_of_birth": "8/25/2023",
+      "age": 35,
+      "country": "Ukraine",
+      "phone": "526-488-6451"
     }
   ]
 }

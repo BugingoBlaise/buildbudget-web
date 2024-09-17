@@ -1,20 +1,20 @@
+import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import Modal from "../../components/Modal";
 import Input from "../../components/Inputs";
 import TextArea from "../../components/Inputs/TextArea";
-import { useState } from "react";
 import Button from "../../components/Button";
 import RegulationService from "./RegulationService";
-import { ToastContainer, toast } from "react-toastify";
 
-export const AddRegulation = ({ onClose }) => {
+export const AddRegulation = ({ onClose, onAddSuccess }) => {
   const [imagePreview, setImagePreview] = useState(null);
-  // const [regulation, setRegulation] = useState;
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -22,27 +22,37 @@ export const AddRegulation = ({ onClose }) => {
     }
   };
 
-  const onSubmit = (data, e) => {
-    e.preventDefault();
-    console.log(data);
-    RegulationService.saveRegulation(data)
-      .then((res) => {
-        toast.success("Blog added successfully", {
-          autoClose: 2000,
-          hideProgressBar: true,
-          position: "top-center",
-        });
-        console.log("Regulation added :" + res);
-      })
-      .catch((error) => {
-        console.log(error);
+  const onSubmit = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("regulationTitle", data.regulationTitle);
+      formData.append("regulationDetails", data.regulationDetails);
+      if (data.regulationImage && data.regulationImage.length > 0) {
+        formData.append("regulationImage", data.regulationImage[0]);
+      }
+
+      const response = await RegulationService.saveRegulation(formData);
+      toast.success("Regulation added successfully", {
+        autoClose: 2000,
+        hideProgressBar: true,
+        position: "top-center",
       });
+      onAddSuccess(response.data);
+      onClose();
+    } catch (error) {
+      console.error("Error adding regulation:", error);
+      toast.error("Failed to add regulation. Please try again.", {
+        autoClose: 2000,
+        hideProgressBar: true,
+        position: "top-center",
+      });
+    }
   };
+
   return (
     <Modal toggleFunction={onClose}>
-      <h2 className="text-lg font-bold mb-4">{"Add Regulation"}</h2>
+      <h2 className="text-lg font-bold mb-4">Add Regulation</h2>
       <form
-        action=""
         onSubmit={handleSubmit(onSubmit)}
         encType="multipart/form-data"
         className="flex flex-col gap-4"
@@ -51,48 +61,48 @@ export const AddRegulation = ({ onClose }) => {
           name="regulationTitle"
           control={control}
           defaultValue=""
-          rules={{ required: "regulation title is required" }}
-          render={({ field }) => {
-            return (
-              <div className="flex flex-col gap-1">
-                <label className="text-whiteTheme-textColor font-semibold text-base">
-                  Regulation title
-                </label>
-                <div className="relative">
-                  <Input
-                    type="text"
-                    placeholder="Regulation Title"
-                    {...field}
-                    className={`!border-2 !border-slate-300 !pl-4`}
-                  />
-                </div>
-                {errors.regulationTitle && (
-                  <p className="text-red-600 text-[13px]">
-                    {errors.regulationTitle.message}
-                  </p>
-                )}
-              </div>
-            );
-          }}
+          rules={{ required: "Regulation title is required" }}
+          render={({ field }) => (
+            <div className="flex flex-col gap-1">
+              <label className="text-whiteTheme-textColor font-semibold text-base">
+                Regulation Title
+              </label>
+              <Input
+                type="text"
+                placeholder="Regulation Title"
+                {...field}
+                className="!border-2 !border-slate-300 !pl-4"
+              />
+              {errors.regulationTitle && (
+                <p className="text-red-600 text-[13px]">
+                  {errors.regulationTitle.message}
+                </p>
+              )}
+            </div>
+          )}
         />
         <Controller
           name="regulationDetails"
           control={control}
           defaultValue=""
-          render={({ field }) => {
-            return (
-              <div className="flex flex-col gap-1">
-                <label className="text-whiteTheme-textColor font-semibold text-base">
-                  Regulation title
-                </label>
-                <TextArea
-                  {...field}
-                  placeholder={`Regulation details`}
-                  className={"!border-whiteTheme-subPrimaryColor"}
-                />
-              </div>
-            );
-          }}
+          rules={{ required: "Regulation details are required" }}
+          render={({ field }) => (
+            <div className="flex flex-col gap-1">
+              <label className="text-whiteTheme-textColor font-semibold text-base">
+                Regulation Details
+              </label>
+              <TextArea
+                {...field}
+                placeholder="Regulation details"
+                className="!border-whiteTheme-subPrimaryColor"
+              />
+              {errors.regulationDetails && (
+                <p className="text-red-600 text-[13px]">
+                  {errors.regulationDetails.message}
+                </p>
+              )}
+            </div>
+          )}
         />
         {imagePreview && (
           <div className="flex justify-start mt-2">
@@ -104,35 +114,26 @@ export const AddRegulation = ({ onClose }) => {
           </div>
         )}
         <Controller
-          name="image"
+          name="regulationImage"
           control={control}
           defaultValue=""
-          // rules={{ required: "Menu image is required" }}
           render={({ field }) => (
             <div className="flex flex-col gap-1">
               <label className="text-whiteTheme-textColor font-semibold text-base">
-                Menu Image
+                Regulation Image
               </label>
-              <div className="relative">
-                <Input
-                  type="file"
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.files);
-                    handleImageChange(e);
-                  }}
-                  className={`!border border-stroke !border-slate-300 !pl-4`}
-                />
-              </div>
-              {errors.image && (
-                <p className="text-red-600 text-[13px]">
-                  {errors.image.message}
-                </p>
-              )}
+              <Input
+                type="file"
+                onChange={(e) => {
+                  field.onChange(e.target.files);
+                  handleImageChange(e);
+                }}
+                className="!border border-stroke !border-slate-300 !pl-4"
+              />
             </div>
           )}
         />
-        <Button value={"Save"} className="mt-4" />
+        <Button value="Save" className="mt-4" type="submit" />
       </form>
     </Modal>
   );

@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://localhost:8080/api/regulations";
+const API_URL = "http://localhost:8080/api/loans";
 
 class LoanService {
   saveLoan(formData) {

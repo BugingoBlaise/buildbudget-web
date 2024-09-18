@@ -8,10 +8,10 @@ import { UsersDashboard } from "../pages/users/UsersDashboard";
 import { ReportsDashboard } from "../pages/reports/ReportsDashboard";
 import { AccountApprovalDashboard } from "../pages/AccountApproval/AccountApprovalDashboard";
 import NotFound from "../pages/NotFound";
-import { FinancingOptions } from "../pages/financing/LoanOption";
 import { MaterialProcurement } from "../pages/procurement/MaterialProcurement";
 import { ReviewRates } from "../pages/review/ReviewRates";
 import { BuildingRegulationsDahboard } from "../pages/regulations/BuildingRegulationsDasboard";
+import { FinancingPage } from "../pages/financing/FinancingPage";
 
 export const AppRoutes = () => {
   return (
@@ -25,7 +25,7 @@ export const AppRoutes = () => {
         <Route path="/users" element={<UsersDashboard />} />
         <Route path="/regulations" element={<BuildingRegulationsDahboard />} />
         <Route path="/reports" element={<ReportsDashboard />} />
-        <Route path="/finance" element={<FinancingOptions />} />
+        <Route path="/finance" element={<FinancingPage />} />
         <Route path="/materials" element={<MaterialProcurement />} />
         <Route path="/reviews" element={<ReviewRates />} />
       </Route>

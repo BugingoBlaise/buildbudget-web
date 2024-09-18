@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import Modal from "../../components/Modal";
-import Input from "../../components/Inputs";
-import TextArea from "../../components/Inputs/TextArea";
-import Button from "../../components/Button";
-import RegulationService from "./RegulationService";
+import Modal from "../../../components/Modal";
+import Input from "../../../components/Inputs";
+import TextArea from "../../../components/Inputs/TextArea";
+import Button from "../../../components/Button";
+import RegulationService from "../RegulationService";
 
 export const AddRegulation = ({ onClose, onAddSuccess }) => {
   const [imagePreview, setImagePreview] = useState(null);

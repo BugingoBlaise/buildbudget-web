@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import MOCK_DATA from "../../assets/data/db.json";
-
+import COLUMNS from "../../constants/columns";
 import {
   useTable,
   useGlobalFilter,
@@ -12,10 +12,11 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
-import COLUMNS from "../../constants/columns";
+
+// const API_URL = "http://localhost:8080/api/users";
 
 export const UsersDashboard = () => {
-  const columns = useMemo(() => COLUMNS, []);
+  const columns = useMemo(() => COLUMNS.users, []);
   const data = useMemo(() => MOCK_DATA.users, []);
   const {
     getTableProps,
@@ -48,7 +49,8 @@ export const UsersDashboard = () => {
     <div className="p-6 bg-gray-100 min-h-screen">
       {/* Search Filter */}
       <div className="mb-4 flex items-center">
-        <MagnifyingGlassIcon className="h-5 w-5 text-gray-500 mr-2" />
+        {/* <MagnifyingGlassIcon className="h-5 w-5 text-gray-500 mr-2" /> */}
+
         <input
           value={globalFilter || ""}
           onChange={(e) => setGlobalFilter(e.target.value)}
@@ -56,6 +58,7 @@ export const UsersDashboard = () => {
           placeholder="Search users..."
         />
       </div>
+
       {/* Table */}
       <div className="overflow-x-auto">
         <table

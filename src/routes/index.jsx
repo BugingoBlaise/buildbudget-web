@@ -27,7 +27,7 @@ export const AppRoutes = () => {
         <Route path="/reports" element={<ReportsDashboard />} />
         <Route path="/finance" element={<FinancingPage />} />
         <Route path="/materials" element={<MaterialProcurement />} />
-        <Route path="/reviews" element={<ReviewRates />} />
+        <Route path="/contractors" element={<ReviewRates />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

@@ -1,12 +1,12 @@
 import { RxDashboard } from "react-icons/rx";
 import {
- MdAttachMoney ,
+  MdAttachMoney,
   MdAssignment,
   MdManageAccounts,
   MdSupervisorAccount,
-  MdRateReview
+  MdRateReview,
 } from "react-icons/md";
-import { FaMoneyCheckDollar ,FaTrowelBricks  } from "react-icons/fa6";
+import { FaMoneyCheckDollar, FaTrowelBricks } from "react-icons/fa6";
 // import { FaUsers } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 import { TbReportAnalytics } from "react-icons/tb";
@@ -33,23 +33,23 @@ export const sideBarLinks = [
     path: "/regulations",
     icon: MdAssignment,
   },
-  
+
   {
-    name:"Financing Options",
-    path:"/finance",
-    icon:FaMoneyCheckDollar
+    name: "Financing Options",
+    path: "/finance",
+    icon: FaMoneyCheckDollar,
   },
-  
-    {
-    name:"Materials",
-    path:"/materials",
-    icon:FaTrowelBricks
+
+  {
+    name: "Materials",
+    path: "/materials",
+    icon: FaTrowelBricks,
   },
   {
-        name:"Reviews and Rates",
-    path:"/reviews",
-    icon:MdRateReview
-  }
+    name: "Contractors",
+    path: "/contractors",
+    icon: MdRateReview,
+  },
   // {
   //   name: "Reports",
   //   path: "/reports",

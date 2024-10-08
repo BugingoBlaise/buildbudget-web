@@ -6,7 +6,7 @@ import { HomePage } from "../pages/home";
 import RegisterPage from "../pages/Authentication/RegisterPage";
 import { UsersDashboard } from "../pages/users/UsersDashboard";
 import { ReportsDashboard } from "../pages/reports/ReportsDashboard";
-import { AccountApprovalDashboard } from "../pages/AccountApproval/AccountApprovalDashboard";
+import { AccountsDashboard } from "../pages/Accounts/AccountsDashboard";
 import NotFound from "../pages/NotFound";
 import { MaterialProcurement } from "../pages/procurement/MaterialProcurement";
 import { ReviewRates } from "../pages/review/ReviewRates";
@@ -21,7 +21,7 @@ export const AppRoutes = () => {
       <Route path="/register" element={<RegisterPage />} />
       <Route element={<DashboardLayout />}>
         <Route path="/dashboard" element={<HomeDashboard />} />
-        <Route path="/approvals" element={<AccountApprovalDashboard />} />
+        <Route path="/accounts" element={<AccountsDashboard />} />
         <Route path="/users" element={<UsersDashboard />} />
         <Route path="/regulations" element={<BuildingRegulationsDahboard />} />
         <Route path="/reports" element={<ReportsDashboard />} />

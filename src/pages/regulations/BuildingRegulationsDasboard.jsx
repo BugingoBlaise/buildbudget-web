@@ -16,11 +16,21 @@ export const BuildingRegulationsDahboard = () => {
   const [editModal, setEditModal] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [currentRegulation, setCurrentRegulation] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const fetchRegulations = useCallback(() => {
-    axios.get(API_URL).then((res) => {
-      setRegulations(res.data);
-    });
+  const fetchRegulations = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await axios.get(API_URL);
+      setRegulations(response.data);
+    } catch (e) {
+      console.error(e);
+      setError("Failed to load regulations please try again later");
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -56,7 +66,8 @@ export const BuildingRegulationsDahboard = () => {
     setEditModal(false);
     toast.success("Regulation updated successfully!");
   };
-
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
   return (
     <ContainerHolder className="flex flex-col p-6 bg-gray-100 min-h-screen">
       <div className="flex justify-between items-center mb-6">

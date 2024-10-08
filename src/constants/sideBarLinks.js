@@ -19,8 +19,8 @@ export const sideBarLinks = [
   //   icon: RxDashboard,
   // },
   {
-    name: "Account Approvals",
-    path: "/approvals",
+    name: "Accounts Dashboard",
+    path: "/accounts",
     icon: MdManageAccounts,
   },
   {

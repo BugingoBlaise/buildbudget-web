@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Input from "../../../components/Inputs";
 import Button from "../../../components/Button";
 import { useNavigate } from "react-router-dom";
+import RegistrationService from "../RegistrationService";
 
 export default function RegisterContractorForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,8 +16,41 @@ export default function RegisterContractorForm() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    // e.preventDefault();
+
+    try {
+      // Prepare the data object to be sent as JSON
+      const requestData = {
+        companyName: data.companyName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        username: data.username,
+        password: data.password,
+        licenseNumber: data.licenseNumber,
+        address: data.address,
+        userType: "CONTRACTOR",
+      };
+      console.log(requestData);
+      // Send data as JSON
+      const response = await RegistrationService.RegisterUser(requestData);
+
+      toast.success("Signed up successfully", {
+        autoClose: 4000,
+        hideProgressBar: true,
+        position: "top-center",
+      });
+
+      // Optional: navigate to login or dashboard after successful signup
+      navigate("/login");
+    } catch (error) {
+      console.error("Error Signip up user:", error);
+      toast.error("Failed to SignUp User. Please try again.", {
+        autoClose: 3000,
+        hideProgressBar: true,
+        position: "top-center",
+      });
+    }
   };
 
   return (
@@ -31,12 +65,12 @@ export default function RegisterContractorForm() {
             Create account
           </h1>
           <p className="text-sm text-gray-700">
-            Signup as Contractor in budget build system
+            Signup as Contractor in Budget Build System
           </p>
         </header>
 
         <Controller
-          name="company_name"
+          name="companyName"
           control={control}
           defaultValue=""
           rules={{ required: "Company name is required" }}
@@ -54,9 +88,9 @@ export default function RegisterContractorForm() {
                     className={`!border-2 !border-slate-300 !pl-4`}
                   />
                 </div>
-                {errors.company_name && (
+                {errors.companyName && (
                   <p className="text-red-600 text-[13px]">
-                    {errors.company_name.message}
+                    {errors.companyName.message}
                   </p>
                 )}
               </div>
@@ -92,7 +126,7 @@ export default function RegisterContractorForm() {
           }}
         />
         <Controller
-          name="phone_number"
+          name="phoneNumber"
           control={control}
           defaultValue=""
           rules={{ required: "Phone number is required" }}
@@ -110,9 +144,9 @@ export default function RegisterContractorForm() {
                     className={`!border-2 !border-slate-300 !pl-4`}
                   />
                 </div>
-                {errors.phone_number && (
+                {errors.phoneNumber && (
                   <p className="text-red-600 text-[13px]">
-                    {errors.phone_number.message}
+                    {errors.phoneNumber.message}
                   </p>
                 )}
               </div>
@@ -177,15 +211,15 @@ export default function RegisterContractorForm() {
         />
 
         <Controller
-          name="licence_number"
+          name="licenseNumber"
           control={control}
           defaultValue=""
-          rules={{ required: "Licence name is required" }}
+          rules={{ required: "Licence number is required" }}
           render={({ field }) => {
             return (
               <div className="flex flex-col gap-1">
                 <label className="text-whiteTheme-textColor font-semibold text-base">
-                  Licence name
+                  Licence number
                 </label>
                 <div className="relative">
                   <Input
@@ -195,9 +229,9 @@ export default function RegisterContractorForm() {
                     className={`!border-2 !border-slate-300 !pl-4`}
                   />
                 </div>
-                {errors.licence_number && (
+                {errors.licenseNumber && (
                   <p className="text-red-600 text-[13px]">
-                    {errors.licence_number.message}
+                    {errors.licenseNumber.message}
                   </p>
                 )}
               </div>

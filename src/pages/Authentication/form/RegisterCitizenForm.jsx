@@ -1,10 +1,11 @@
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Input from "../../../components/Inputs";
 import Button from "../../../components/Button";
 import { useNavigate } from "react-router-dom";
+import RegistrationService from "../RegistrationService";
 
 export default function RegisterCitizenForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,15 +16,48 @@ export default function RegisterCitizenForm() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    // e.preventDefault();
+
+    try {
+      // Prepare the data object to be sent as JSON
+      const requestData = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        username: data.username,
+        address: data.address,
+        password: data.password,
+        userType: "CITIZEN",
+      };
+      console.log(requestData);
+      // Send data as JSON
+      const response = await RegistrationService.RegisterUser(requestData);
+
+      toast.success("Signed up successfully", {
+        autoClose: 4000,
+        hideProgressBar: true,
+        position: "top-center",
+      });
+
+      // Optional: navigate to login or dashboard after successful signup
+      navigate("/login");
+    } catch (error) {
+      console.error("Error Signip up user:", error);
+      toast.error("Failed to SignUp User. Please try again.", {
+        autoClose: 3000,
+        hideProgressBar: true,
+        position: "top-center",
+      });
+    }
   };
 
   return (
     <div className="w-1/2 max-md:w-[80%]  h-full  flex flex-col  py-20 px-20 max-md:px-7 gap-5 shadow-sm border-2 border-slate-100 rounded-md">
       <form
-        action=""
         onSubmit={handleSubmit(onSubmit)}
+        encType="application/json"
         className="w-full flex flex-col gap-3"
       >
         <header>
@@ -35,7 +69,7 @@ export default function RegisterCitizenForm() {
           </p>
         </header>
         <Controller
-          name="first_name"
+          name="firstName"
           control={control}
           defaultValue=""
           rules={{ required: "First name is required" }}
@@ -53,9 +87,9 @@ export default function RegisterCitizenForm() {
                     className={`!border-2 !border-slate-300 !pl-4`}
                   />
                 </div>
-                {errors.first_name && (
+                {errors.firstName && (
                   <p className="text-red-600 text-[13px]">
-                    {errors.first_name.message}
+                    {errors.firstName.message}
                   </p>
                 )}
               </div>
@@ -63,7 +97,7 @@ export default function RegisterCitizenForm() {
           }}
         />
         <Controller
-          name="last_name"
+          name="lastName"
           control={control}
           defaultValue=""
           rules={{ required: "Last name is required" }}
@@ -81,9 +115,9 @@ export default function RegisterCitizenForm() {
                     className={`!border-2 !border-slate-300 !pl-4`}
                   />
                 </div>
-                {errors.last_name && (
+                {errors.lastName && (
                   <p className="text-red-600 text-[13px]">
-                    {errors.last_name.message}
+                    {errors.lastname.message}
                   </p>
                 )}
               </div>
@@ -119,7 +153,7 @@ export default function RegisterCitizenForm() {
           }}
         />
         <Controller
-          name="phone_number"
+          name="phoneNumber"
           control={control}
           defaultValue=""
           rules={{ required: "Phone number is required" }}
@@ -137,9 +171,9 @@ export default function RegisterCitizenForm() {
                     className={`!border-2 !border-slate-300 !pl-4`}
                   />
                 </div>
-                {errors.phone_number && (
+                {errors.phoneNumber && (
                   <p className="text-red-600 text-[13px]">
-                    {errors.phone_number.message}
+                    {errors.phoneNumber.message}
                   </p>
                 )}
               </div>
@@ -252,10 +286,10 @@ export default function RegisterCitizenForm() {
             </div>
           )}
         />
-
         <Button
           value={<span className="flex items-center">{"Sign Up"}</span>}
           className={"!w-full"}
+          type="submit"
         />
         <span className="flex items-center gap-2">
           <p className="text-gray-600">Already have an account! </p>

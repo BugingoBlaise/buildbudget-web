@@ -6,12 +6,13 @@ import {
   useSortBy,
   usePagination,
 } from "react-table";
-import { userColumns } from "./Column"; // Import the columns as a function
+import { userColumns } from "./Column";
 import AccountService from "./AccountService";
 import { toast } from "react-toastify";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+
 const API_URL = "http://localhost:8080/api/users";
 
 export const AccountsDashboard = () => {
@@ -19,13 +20,20 @@ export const AccountsDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [currentAccount, setCurrentAccount] = useState(null);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false); // Control modal visibility
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const fetchUsers = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
       const response = await axios.get(API_URL);
+
+      const transformedData = response.data.map((user) => ({
+        ...user,
+        userDetails: user.userDetails || {}, // Ensure userDetails exists
+        roles: user.roles || [], // Ensure roles exists
+      }));
+      setAccounts(transformedData);
       setAccounts(response.data);
     } catch (e) {
       console.error(e);
@@ -39,16 +47,13 @@ export const AccountsDashboard = () => {
     fetchUsers();
   }, [fetchUsers]);
 
-  // Memoize the columns to prevent re-renders and infinite loops
   const memoizedColumns = useMemo(
     () => userColumns(setCurrentAccount, setDeleteModalOpen),
     [setCurrentAccount, setDeleteModalOpen]
   );
 
-  // Memoized data for react-table
   const data = useMemo(() => accounts, [accounts]);
 
-  // Use the react-table hooks including global filter (search)
   const {
     getTableProps,
     getTableBodyProps,
@@ -64,7 +69,7 @@ export const AccountsDashboard = () => {
     gotoPage,
     nextPage,
   } = useTable(
-    { columns: memoizedColumns, data }, // Use the memoized columns here
+    { columns: memoizedColumns, data },
     useGlobalFilter,
     useSortBy,
     usePagination
@@ -84,7 +89,19 @@ export const AccountsDashboard = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <div
+          className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status"
+        >
+          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+            Loading...
+          </span>
+        </div>
+      </div>
+    );
   if (error) return <div>Error: {error}</div>;
 
   return (
@@ -107,41 +124,57 @@ export const AccountsDashboard = () => {
         </div>
         <table {...getTableProps()} className="min-w-full">
           <thead>
-            {headerGroups.map((headerGroup) => (
+            {headerGroups.map((headerGroup, i) => (
               <tr
                 {...headerGroup.getHeaderGroupProps()}
+                key={`header-group-${i}`}
                 className="border-b border-gray-200"
               >
-                {headerGroup.headers.map((column) => (
-                  <th
-                    {...column.getHeaderProps()}
-                    className="py-3 text-left text-sm font-semibold text-gray-900"
-                  >
-                    {column.render("Header")}
-                  </th>
-                ))}
+                {headerGroup.headers.map((column, j) => {
+                  const headerProps = column.getHeaderProps();
+                  // Remove the key from headerProps
+                  const { key, ...restHeaderProps } = headerProps;
+                  return (
+                    <th
+                      key={`header-${i}-${j}`}
+                      {...restHeaderProps}
+                      className="py-3 text-left text-sm font-semibold text-gray-900"
+                    >
+                      {column.render("Header")}
+                    </th>
+                  );
+                })}
               </tr>
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {rows.map((row, i) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="border-b border-gray-100">
-                  {row.cells.map((cell) => (
-                    <td
-                      key={cell.getCellProps().key}
-                      className="py-4 text-sm text-gray-500"
-                    >
-                      {cell.render("Cell")}
-                    </td>
-                  ))}
+                <tr
+                  key={`row-${i}`}
+                  {...row.getRowProps()}
+                  className="border-b border-gray-100"
+                >
+                  {row.cells.map((cell, j) => {
+                    const cellProps = cell.getCellProps();
+                    // Remove the key from cellProps
+                    const { key, ...restCellProps } = cellProps;
+                    return (
+                      <td
+                        key={`cell-${i}-${j}`}
+                        {...restCellProps}
+                        className="py-4 text-sm text-gray-500"
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    );
+                  })}
                 </tr>
               );
             })}
           </tbody>
         </table>
-        {/* Pagination */}
         <div className="mt-4 flex items-center justify-center">
           <button
             onClick={() => previousPage()}
@@ -153,7 +186,7 @@ export const AccountsDashboard = () => {
           </button>
           <ul className="flex items-center space-x-2 mx-4">
             {pageOptions.map((pageNumber) => (
-              <li key={pageNumber}>
+              <li key={`page-${pageNumber}`}>
                 <button
                   onClick={() => gotoPage(pageNumber)}
                   className={`px-4 py-2 rounded-md ${
@@ -178,11 +211,13 @@ export const AccountsDashboard = () => {
         </div>
       </div>
 
-      {/* Delete Confirmation Modal */}
       {deleteModalOpen && (
         <Modal toggleFunction={() => setDeleteModalOpen(false)}>
           <h2 className="text-lg font-bold mb-4">Confirm Delete</h2>
-          <p>Are you sure you want to delete {currentAccount?.username}?</p>
+          <p>
+            Are you sure you want to delete this account of{" "}
+            {currentAccount?.username}?
+          </p>
           <div className="mt-4 flex justify-end">
             <Button
               value="Cancel"
@@ -192,7 +227,7 @@ export const AccountsDashboard = () => {
             <Button
               value="Delete"
               className="bg-red-500"
-              onClick={handleDelete} // Trigger the delete action
+              onClick={handleDelete}
             />
           </div>
         </Modal>

@@ -13,21 +13,21 @@ import { TbReportAnalytics } from "react-icons/tb";
 // import { AiTwotoneBank } from "react-icons/ai";
 
 export const sideBarLinks = [
-  // {
-  //   name: "Dashboard",
-  //   path: "/dashboard",
-  //   icon: RxDashboard,
-  // },
+  {
+    name: "Dashboard",
+    path: "/dashboard",
+    icon: RxDashboard,
+  },
   {
     name: "Accounts Dashboard",
     path: "/accounts",
-    icon: MdManageAccounts,
-  },
-  {
-    name: "Users",
-    path: "/users",
     icon: MdSupervisorAccount,
   },
+  // {
+  //   name: "Users",
+  //   path: "/users",
+  //   icon: MdSupervisorAccount,
+  // },
   {
     name: "Building Regulations",
     path: "/regulations",
@@ -50,15 +50,15 @@ export const sideBarLinks = [
     path: "/contractors",
     icon: MdRateReview,
   },
-  // {
-  //   name: "Reports",
-  //   path: "/reports",
-  //   icon: TbReportAnalytics,
-  // },
+  {
+    name: "Reports",
+    path: "/reports",
+    icon: TbReportAnalytics,
+  },
 
   // {
   //   name: "Settings",
-  //   path: "/settings",
+  //   path: "/user/settings",
   //   icon: IoIosSettings,
   // },
 ];

@@ -40,9 +40,7 @@ const Navbar = () => {
               // navigate("/");
             }}
           />
-          <h1 class="text-3xl font-bold text-gray-800">
-            RHA
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-800">RHA</h1>
         </header>
 
         <ul className="flex gap-8 text-whiteTheme-primaryColor dark:text-darkTheme-textColor max-md:hidden">

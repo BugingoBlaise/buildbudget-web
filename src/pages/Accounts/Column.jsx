@@ -7,11 +7,20 @@ export const userColumns = (setCurrentAccount, setDeleteModalOpen) => [
   },
   {
     Header: "Email",
-    accessor: (user) => user.userDetails.email, // Nested email field
+    accessor: (user) => {
+      // Safe access to nested email property with null checks
+      return user?.userDetails?.email || "N/A";
+    },
   },
   {
+    // Header: "Roles",
+    // accessor: (user) => user.roles.join(", "),
+
     Header: "Roles",
-    accessor: (user) => user.roles.join(", "),
+    accessor: (user) => {
+      // Safe access to roles array with null check
+      return Array.isArray(user?.roles) ? user.roles.join(", ") : "N/A";
+    },
   },
   {
     Header: "Actions",

@@ -52,85 +52,66 @@ export const AddLoan = ({ onClose, onAddSuccess }) => {
   };
 
   return (
-    <Modal toggleFunction={onClose}>
+    <Modal toggleFunction={onClose} className={"!w-[55%]"}>
       <h2 className="text-lg font-bold mb-4">Add Loan</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
         encType="multipart/form-data"
         className="flex flex-col gap-4"
       >
-        <Controller
-          name="LoanName"
-          control={control}
-          defaultValue=""
-          rules={{ required: "Loan name is required" }}
-          render={({ field }) => (
-            <div className="flex flex-col gap-1">
-              <label className="text-whiteTheme-textColor font-semibold text-base">
-                Loan Name
-              </label>
-              <Input
-                type="text"
-                placeholder="Loan Title"
-                {...field}
-                className="!border-2 !border-slate-300 !pl-4"
-              />
-              {errors.LoanName && (
-                <p className="text-red-600 text-[13px]">
-                  {errors.LoanName.message}
-                </p>
-              )}
-            </div>
-          )}
-        />
-        <Controller
-          name="description"
-          control={control}
-          defaultValue=""
-          rules={{ required: "Loan description is required" }}
-          render={({ field }) => (
-            <div className="flex flex-col gap-1">
-              <label className="text-whiteTheme-textColor font-semibold text-base">
-                Loan Description
-              </label>
-              <TextArea
-                {...field}
-                placeholder="Loan description details"
-                className="!border-whiteTheme-subPrimaryColor"
-              />
-              {errors.description && (
-                <p className="text-red-600 text-[13px]">
-                  {errors.description.message}
-                </p>
-              )}
-            </div>
-          )}
-        />
-        <Controller
-          name="interestRate"
-          control={control}
-          defaultValue=""
-          rules={{ required: "Loan interestRate is required" }}
-          render={({ field }) => (
-            <div className="flex flex-col gap-1">
-              <label className="text-whiteTheme-textColor font-semibold text-base">
-                Loan Interest Rate
-              </label>
-              <Input
-                type="number"
-                step
-                placeholder="Loan interest rate"
-                {...field}
-                className="!border-2 !border-slate-300 !pl-4"
-              />
-              {errors.interestRate && (
-                <p className="text-red-600 text-[13px]">
-                  {errors.interestRate.message}
-                </p>
-              )}
-            </div>
-          )}
-        />
+        <div className="flex items-center gap-3">
+          {" "}
+          <Controller
+            name="LoanName"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Loan name is required" }}
+            render={({ field }) => (
+              <div className="w-1/2 flex flex-col gap-1">
+                <label className="text-whiteTheme-textColor font-semibold text-base">
+                  Loan Name
+                </label>
+                <Input
+                  type="text"
+                  placeholder="Loan Title"
+                  {...field}
+                  className="!border-2 !border-slate-300 !pl-4"
+                />
+                {errors.LoanName && (
+                  <p className="text-red-600 text-[13px]">
+                    {errors.LoanName.message}
+                  </p>
+                )}
+              </div>
+            )}
+          />
+          <Controller
+            name="interestRate"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Loan interestRate is required" }}
+            render={({ field }) => (
+              <div className="w-1/2 flex flex-col gap-1">
+                <label className="text-whiteTheme-textColor font-semibold text-base">
+                  Loan Interest Rate
+                </label>
+                <Input
+                  type="number"
+                  step
+                  placeholder="Loan interest rate"
+                  {...field}
+                  className="!border-2 !border-slate-300 !pl-4"
+                />
+                {errors.interestRate && (
+                  <p className="text-red-600 text-[13px]">
+                    {errors.interestRate.message}
+                  </p>
+                )}
+              </div>
+            )}
+          />
+        </div>
+
         <Controller
           name="link"
           control={control}
@@ -182,6 +163,29 @@ export const AddLoan = ({ onClose, onAddSuccess }) => {
                 }}
                 className="!border border-stroke !border-slate-300 !pl-4"
               />
+            </div>
+          )}
+        />
+        <Controller
+          name="description"
+          control={control}
+          defaultValue=""
+          rules={{ required: "Loan description is required" }}
+          render={({ field }) => (
+            <div className="flex flex-col gap-1">
+              <label className="text-whiteTheme-textColor font-semibold text-base">
+                Loan Description
+              </label>
+              <TextArea
+                {...field}
+                placeholder="Loan description details"
+                className="!border-whiteTheme-subPrimaryColor"
+              />
+              {errors.description && (
+                <p className="text-red-600 text-[13px]">
+                  {errors.description.message}
+                </p>
+              )}
             </div>
           )}
         />

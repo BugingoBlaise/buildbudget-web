@@ -1,71 +1,68 @@
-import { useState, useEffect, useCallback } from "react";
-import Button from "../../components/Button/index";
-import ContainerHolder from "../../components/container/index";
 import axios from "axios";
-import { AddLoan } from "../financing/child/AddLoan";
-import { UpdateLoan } from "../financing/child/UpdateLoan";
-import LoanService from "./LoanService";
-import Modal from "../../components/Modal";
+import { useCallback, useEffect, useState } from "react";
+import MaterialService from "./MaterialService";
 import { toast } from "react-toastify";
-// import { data } from "autoprefixer";
-import { CiEdit } from "react-icons/ci";
-import { MdDeleteForever } from "react-icons/md";
+import Button from "../../components/Button";
+import Modal from "../../components/Modal";
+import ContainerHolder from "../../components/container";
+import { AddMaterial } from "./child/AddMaterial";
+import { UpdateMaterial } from "./child/UpdateMaterial";
 
-const API_URL = "http://localhost:8080/api/loans";
-
-export const FinancingPage = () => {
-  const [loans, setLoans] = useState([]);
+const API_URL = "http://localhost:8080/api/materials";
+export const MaterialsPage = () => {
+  const [materials, setMaterials] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [currentLoan, setCurrentLoan] = useState(null);
+  const [currentMaterial, setCurrentMaterial] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchLoans = useCallback(async () => {
+  const fetchMaterials = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
       const response = await axios.get(API_URL);
-      setLoans(response.data);
-      // if (response.data) {
-      //   console.log(response.data);
-      // }
+      setMaterials(response.data);
+      console.log(response.data);
     } catch (e) {
-      console.log(e);
-      setError("Failed to load financing options");
+      console.error(e);
+      setError("Failed to load materials please try again later");
     } finally {
       setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    fetchLoans();
-  }, [fetchLoans]);
+    fetchMaterials();
+  }, [fetchMaterials]);
 
-  const handleUpdateConfirm = (loan) => {
-    setCurrentLoan(loan);
+  const handleUpdateConfirm = (mat) => {
+    setCurrentMaterial(mat);
     setEditModal(true);
   };
 
   const handleDelete = (e) => {
     e.preventDefault();
-    LoanService.deleteLoan(currentLoan.id)
+    MaterialService.deleteMaterial(currentMaterial.id)
       .then(() => {
-        setLoans(loans.filter((loan) => loan.id !== currentLoan.id));
+        setMaterials(materials.filter((reg) => reg.id !== currentMaterial.id));
         setDeleteModalOpen(false);
-        toast.success("Loan deleted successfully!");
+        toast.success("Material deleted successfully!");
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const handleUpdateSuccess = (updatedLoan) => {
-    setLoans(
-      loans.map((loan) => (loan.id === updatedLoan.id ? updatedLoan : loan))
+  const handleUpdateSuccess = (updatedMaterial) => {
+    setMaterials(
+      materials.map((mat) =>
+        mat.id === updatedMaterial.id ? updatedMaterial : mat
+      )
     );
     setEditModal(false);
+    toast.success("Materials updated successfully!");
   };
   if (isLoading)
     return (
@@ -88,49 +85,42 @@ export const FinancingPage = () => {
         </div>
       </div>
     );
-  if (error) return <div>Error: {}</div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
     <ContainerHolder className="flex flex-col p-6 bg-gray-100 min-h-screen">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Financing Options </h1>
-        <Button value="Add Loan" onClick={() => setModalOpen(true)} />
+        <h1 className="text-2xl font-bold">Materials Page</h1>
+        <Button
+          value="Add Material
+        "
+          onClick={() => setModalOpen(true)}
+        />
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        {loans.map((loan, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg shadow-md p-4 relative"
-          >
+        {materials.map((material) => (
+          <div key={material.id} className="bg-white rounded-lg shadow-md p-4">
             <img
-              src={`${API_URL}/image/${loan.imagePath}`}
-              alt={loan.loanName}
+              src={`${API_URL}/image/${material.imagePath}`}
+              alt={material.materialName}
               className="w-full h-48 object-cover mb-4 rounded-md"
             />
-            <h3 className="text-xl font-bold">{loan.loanName}</h3>
-            <p className="text-sm text-gray-600 mt-2">{loan.description}</p>
+            <h3 className="text-xl font-bold">{material.materialName}</h3>
+            <p className="text-sm text-gray-600 mt-2">
+              {material.materialDetails}
+            </p>
 
-            <div className="flex justify bottom-0">
+            <div className="mt-4 flex justify-between">
               <Button
-                className={""}
-                value={
-                  <span className="flex items-center gap-3">
-                    <CiEdit size={20} />
-                    <p>Update</p>
-                  </span>
-                }
-                onClick={() => handleUpdateConfirm(loan)}
+                value="Update"
+                onClick={() => handleUpdateConfirm(material)}
               ></Button>
               <Button
-                value={
-                  <span className="flex items-center gap-3">
-                    <MdDeleteForever size={20} />
-                    <p>Delete</p>
-                  </span>
-                }
-                className="bg-red-600 text-white"
+                value="Delete"
+                className="bg-yellow-300 text-white"
                 onClick={() => {
-                  setCurrentLoan(loan);
+                  setCurrentMaterial(material);
                   setDeleteModalOpen(true);
                 }}
               />
@@ -140,18 +130,18 @@ export const FinancingPage = () => {
       </div>
 
       {modalOpen && (
-        <AddLoan
+        <AddMaterial
           onClose={() => setModalOpen(false)}
-          onAddSuccess={(newLoan) => {
-            setLoans([...loans, newLoan]);
+          onAddSuccess={(newMaterial) => {
+            setMaterials([...materials, newMaterial]);
             setModalOpen(false);
           }}
         />
       )}
 
       {editModal && (
-        <UpdateLoan
-          loan={currentLoan}
+        <UpdateMaterial
+          material={currentMaterial}
           onClose={() => setEditModal(false)}
           onUpdateSuccess={handleUpdateSuccess}
         />
@@ -161,7 +151,7 @@ export const FinancingPage = () => {
       {deleteModalOpen && (
         <Modal toggleFunction={() => setDeleteModalOpen(false)}>
           <h2 className="text-lg font-bold mb-4">Confirm Delete</h2>
-          <p>Are you sure you want to delete this loan?</p>
+          <p>Are you sure you want to delete this Material?</p>
           <div className="mt-4 flex justify-end">
             <Button
               value="Cancel"

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Input from "../../../components/Inputs";
 import Button from "../../../components/Button";
 import { useNavigate } from "react-router-dom";
-
+import RegistrationService from "../RegistrationService";
 export default function RegisterSupplier() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -15,8 +15,42 @@ export default function RegisterSupplier() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    // e.preventDefault();
+
+    try {
+      // Prepare the data object to be sent as JSON
+      const requestData = {
+        companyName: data.companyName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        username: data.username,
+        password: data.password,
+        licenseNumber: data.licenseNumber,
+        address: data.address,
+        tinNumber: data.tinNumber,
+        userType: "SUPPLIER",
+      };
+      console.log(requestData);
+      // Send data as JSON
+      const response = await RegistrationService.RegisterUser(requestData);
+
+      toast.success("Signed up successfully", {
+        autoClose: 4000,
+        hideProgressBar: true,
+        position: "top-center",
+      });
+
+      // Optional: navigate to login or dashboard after successful signup
+      navigate("/login");
+    } catch (error) {
+      console.error("Error Signip up user:", error);
+      toast.error("Failed to SignUp User. Please try again.", {
+        autoClose: 3000,
+        hideProgressBar: true,
+        position: "top-center",
+      });
+    }
   };
 
   return (
@@ -35,7 +69,7 @@ export default function RegisterSupplier() {
           </p>
         </header>
 
-        <Controller
+        {/* <Controller
           name="supplier_name"
           control={control}
           defaultValue=""
@@ -62,10 +96,10 @@ export default function RegisterSupplier() {
               </div>
             );
           }}
-        />
+        /> */}
 
         <Controller
-          name="company_name"
+          name="companyName"
           control={control}
           defaultValue=""
           rules={{ required: "Company Name is required" }}
@@ -83,9 +117,9 @@ export default function RegisterSupplier() {
                     className={`!border-2 !border-slate-300 !pl-4`}
                   />
                 </div>
-                {errors.company_name && (
+                {errors.companyName && (
                   <p className="text-red-600 text-[13px]">
-                    {errors.company_name.message}
+                    {errors.companyName.message}
                   </p>
                 )}
               </div>
@@ -151,7 +185,7 @@ export default function RegisterSupplier() {
         />
 
         <Controller
-          name="phone_number"
+          name="phoneNumber"
           control={control}
           defaultValue=""
           rules={{ required: "Phone number is required" }}
@@ -169,9 +203,9 @@ export default function RegisterSupplier() {
                     className={`!border-2 !border-slate-300 !pl-4`}
                   />
                 </div>
-                {errors.phone_number && (
+                {errors.phoneNumber && (
                   <p className="text-red-600 text-[13px]">
-                    {errors.phone_number.message}
+                    {errors.phoneNumber.message}
                   </p>
                 )}
               </div>
@@ -208,7 +242,7 @@ export default function RegisterSupplier() {
         />
 
         <Controller
-          name="tin_number"
+          name="tinNumber"
           control={control}
           defaultValue=""
           rules={{ required: "Tin name is required" }}
@@ -226,9 +260,9 @@ export default function RegisterSupplier() {
                     className={`!border-2 !border-slate-300 !pl-4`}
                   />
                 </div>
-                {errors.tin_number && (
+                {errors.tinNumber && (
                   <p className="text-red-600 text-[13px]">
-                    {errors.tin_number.message}
+                    {errors.tinNumber.message}
                   </p>
                 )}
               </div>

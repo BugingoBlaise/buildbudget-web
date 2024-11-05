@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useLazyBlogDetailsQuery } from "../../app/api";
 import ContainerHolder from "../../components/container";
-import Navbar from "./Navbar";
+// import Navbar from "./Navbar";
 import { useEffect } from "react";
 import { FaUserTie } from "react-icons/fa6";
 import AddComment from "./child/AddComment";

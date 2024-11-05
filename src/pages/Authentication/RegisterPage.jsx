@@ -12,7 +12,7 @@ const RegisterPage = () => {
       <Navbar />
       <div className="my-40 flex flex-col justify-center items-center gap-3">
         {" "}
-        <h2 class="text-3xl font-bold text-gray-800">Register as:</h2>
+        <h2 className="text-3xl font-bold text-gray-800">Register as:</h2>
         <div className="py-8 flex gap-4 items-center">
           <span
             className={`cursor-pointer ${

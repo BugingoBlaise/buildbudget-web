@@ -1,6 +1,31 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import RegulationsList from "../regulations/child/RegulationList";
+import axios from "axios";
+const API_URL = "http://localhost:8080/api/regulations";
 
 export const ReportsDashboard = () => {
+  const [regulations, setRegulations] = useState([]);
+  const [currentRegulation, setCurrentRegulation] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const fetchRegulations = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await axios.get(API_URL);
+      setRegulations(response.data);
+    } catch (e) {
+      console.error(e);
+      setError("Failed to load regulations please try again later");
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchRegulations();
+  }, [fetchRegulations]);
+
   const posts = [
     {
       id: 1,
@@ -20,86 +45,78 @@ export const ReportsDashboard = () => {
       },
     },
   ];
-  // return (
-  //   <div>
-  //     <div
-  //       className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-  //       role="status"
-  //     >
-  //       <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-  //         Loading...
-  //       </span>
-  //     </div>
-  //     <div
-  //       className="inline-block h-12 w-12 animate-[spinner-grow_0.75s_linear_infinite] rounded-full bg-current align-[-0.125em] opacity-0 motion-reduce:animate-[spinner-grow_1.5s_linear_infinite]"
-  //       role="status"
-  //     >
-  //       <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-  //         Loading...
-  //       </span>
-  //     </div>
-  //   </div>
-  // );
-
   return (
-    <div className="bg-white py-10 sm:py-15">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl lg:mx-0">
-          <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-            From the blog
-          </h2>
-          <p className="mt-2 text-lg/8 text-gray-600">
-            Learn how to grow your business with our expert advice.
-          </p>
-        </div>
-        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {posts.map((post) => (
-            <article
-              key={post.id}
-              className="flex max-w-xl flex-col items-start justify-between"
-            >
-              <div className="flex items-center gap-x-4 text-xs">
-                <time dateTime={post.datetime} className="text-gray-500">
-                  {post.date}
-                </time>
-                <a
-                  href={post.category.href}
-                  className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
-                >
-                  {post.category.title}
-                </a>
-              </div>
-              <div className="group relative">
-                <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
-                  <a href={post.href}>
-                    <span className="absolute inset-0" />
-                    {post.title}
-                  </a>
-                </h3>
-                <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">
-                  {post.description}
-                </p>
-              </div>
-              <div className="relative mt-8 flex items-center gap-x-4">
-                <img
-                  alt=""
-                  src={post.author.imageUrl}
-                  className="h-10 w-10 rounded-full bg-gray-50"
-                />
-                <div className="text-sm/6">
-                  <p className="font-semibold text-gray-900">
-                    <a href={post.author.href}>
-                      <span className="absolute inset-0" />
-                      {post.author.name}
-                    </a>
-                  </p>
-                  <p className="text-gray-600">{post.author.role}</p>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+    <div className="flex justify-center items-center p-8">
+      <div
+        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-whiteTheme-primaryColor border-r-transparent align-[-0.125em]"
+        role="status"
+      >
+        <span className="sr-only">Loading...</span>
       </div>
     </div>
   );
+
+  // return (
+  // <div className="bg-white py-10 sm:py-15">
+  //   <div className="mx-auto max-w-7xl px-6 lg:px-8">
+  //     <div className="mx-auto max-w-2xl lg:mx-0">
+  //       <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+  //         From the blog
+  //       </h2>
+  //       <p className="mt-2 text-lg/8 text-gray-600">
+  //         Learn how to grow your business with our expert advice.
+  //       </p>
+  //     </div>
+  //     <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+  //       {posts.map((post) => (
+  //         <article
+  //           key={post.id}
+  //           className="flex max-w-xl flex-col items-start justify-between"
+  //         >
+  //           <div className="flex items-center gap-x-4 text-xs">
+  //             <time dateTime={post.datetime} className="text-gray-500">
+  //               {post.date}
+  //             </time>
+  //             <a
+  //               href={post.category.href}
+  //               className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+  //             >
+  //               {post.category.title}
+  //             </a>
+  //           </div>
+  //           <div className="group relative">
+  //             <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
+  //               <a href={post.href}>
+  //                 <span className="absolute inset-0" />
+  //                 {post.title}
+  //               </a>
+  //             </h3>
+  //             <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">
+  //               {post.description}
+  //             </p>
+  //           </div>
+  //           <div className="relative mt-8 flex items-center gap-x-4">
+  //             <img
+  //               alt=""
+  //               src={post.author.imageUrl}
+  //               className="h-10 w-10 rounded-full bg-gray-50"
+  //             />
+  //             <div className="text-sm/6">
+  //               <p className="font-semibold text-gray-900">
+  //                 <a href={post.author.href}>
+  //                   <span className="absolute inset-0" />
+  //                   {post.author.name}
+  //                 </a>
+  //               </p>
+  //               <p className="text-gray-600">{post.author.role}</p>
+  //             </div>
+  //           </div>
+  //         </article>
+  //       ))}
+  //     </div>
+  //   </div>
+  // </div>
+
+  // <RegulationsList regulations={regulations} />
+  // );
 };

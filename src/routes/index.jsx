@@ -13,6 +13,8 @@ import { BuildingRegulationsDahboard } from "../pages/regulations/BuildingRegula
 import { FinancingPage } from "../pages/financing/FinancingPage";
 
 import { MaterialsPage } from "../pages/materials/MaterialsPage";
+import RegulationsList from "../pages/regulations/child/RegulationList";
+import RegulationDetail from "../pages/regulations/child/RegulationDetail";
 
 export const AppRoutes = () => {
   return (
@@ -28,6 +30,8 @@ export const AppRoutes = () => {
         <Route path="/finance" element={<FinancingPage />} />
         <Route path="/materials" element={<MaterialsPage />} />
         <Route path="/contractors" element={<ReviewRates />} />
+        {/* <Route path="/regList" element={<RegulationsList />} /> */}
+        {/* <Route path="/reg/:id" element={<RegulationDetail />} /> */}
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

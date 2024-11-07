@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { Link } from "react-router-dom";
 
 const API_URL = "http://localhost:8080/api/users";
 
@@ -91,18 +92,33 @@ export const AccountsDashboard = () => {
 
   if (isLoading)
     return (
-      <div>
+      <div className="flex justify-center items-center p-8">
         <div
-          className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-whiteTheme-primaryColor border-r-transparent align-[-0.125em]"
           role="status"
         >
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Loading...
-          </span>
+          <span className="sr-only">Loading...</span>
         </div>
       </div>
     );
-  if (error) return <div>Error: {error}</div>;
+  if (error)
+    return (
+      <div className="p-4">
+        <div className="bg-red-50 border-l-4 border-red-500 p-4">
+          <div className="flex">
+            <div className="ml-3">
+              <p className="text-sm text-red-700">{error}</p>
+            </div>
+          </div>
+        </div>
+        <Link
+          to={"#"}
+          className="mt-4 text-rose-500 hover:text-rose-600 font-medium"
+        >
+          ← Go Back
+        </Link>
+      </div>
+    );
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">

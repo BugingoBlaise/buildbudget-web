@@ -7,6 +7,8 @@ import { UpdateRegulation } from "./child/UpdateRegulation";
 import RegulationService from "./RegulationService";
 import Modal from "../../components/Modal";
 import { toast } from "react-toastify";
+import RegulationsList from "./child/RegulationList";
+import RegulationDetail from "./child/RegulationDetail";
 
 const API_URL = "http://localhost:8080/api/regulations";
 
@@ -18,6 +20,8 @@ export const BuildingRegulationsDahboard = () => {
   const [currentRegulation, setCurrentRegulation] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const [selectedRegulation, setSelectedRegulation] = useState(null);
 
   const fetchRegulations = useCallback(async () => {
     setIsLoading(true);
@@ -42,12 +46,11 @@ export const BuildingRegulationsDahboard = () => {
     setEditModal(true);
   };
 
-  const handleDelete = (e) => {
-    e.preventDefault();
-    RegulationService.deleteRegulation(currentRegulation.id)
+  const handleDelete = () => {
+    RegulationService.deleteRegulation(selectedRegulation.id)
       .then(() => {
         setRegulations(
-          regulations.filter((reg) => reg.id !== currentRegulation.id)
+          regulations.filter((reg) => reg.id !== selectedRegulation.id)
         );
         setDeleteModalOpen(false);
         toast.success("Regulation deleted successfully!");
@@ -66,138 +69,60 @@ export const BuildingRegulationsDahboard = () => {
     setEditModal(false);
     toast.success("Regulation updated successfully!");
   };
+
   if (isLoading)
     return (
-      <div>
+      <div className="flex justify-center items-center p-8">
         <div
-          className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-whiteTheme-primaryColor border-r-transparent align-[-0.125em]"
           role="status"
         >
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Loading...
-          </span>
-        </div>
-        <div
-          className="inline-block h-12 w-12 animate-[spinner-grow_0.75s_linear_infinite] rounded-full bg-current align-[-0.125em] opacity-0 motion-reduce:animate-[spinner-grow_1.5s_linear_infinite]"
-          role="status"
-        >
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Loading...
-          </span>
+          <span className="sr-only">Loading...</span>
         </div>
       </div>
     );
-  if (error) return <div>Error: {error}</div>;
+
+  if (error) {
+    return (
+      <div className="p-4">
+        <div className="bg-red-50 border-l-4 border-red-500 p-4">
+          <div className="flex">
+            <div className="ml-3">
+              <p className="text-sm text-red-700">{error}</p>
+            </div>
+          </div>
+        </div>
+        <button
+          onClick={"#"}
+          className="mt-4 text-rose-500 hover:text-rose-600 font-medium"
+        >
+          ← Go Back
+        </button>
+      </div>
+    );
+  }
   return (
     <ContainerHolder className="flex flex-col p-6 bg-gray-100 min-h-screen">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Building Regulations</h1>
+      <div className="flex justify-end items-center mb-6">
+        {/* <h1 className="text-2xl font-bold">Building Regulations</h1> */}
         <Button value="Add Regulation" onClick={() => setModalOpen(true)} />
       </div>
 
-      {/* <div className="grid grid-cols-3 gap-4">
-        {regulations.map((regulation) => (
-          <div
-            key={regulation.id}
-            className="bg-white rounded-lg shadow-md p-4"
-          >
-            <img
-              src={`${API_URL}/image/${regulation.regulationImagePath}`}
-              alt={regulation.regulationTitle}
-              className="w-full h-48 object-cover mb-4 rounded-md"
-            />
-            <h3 className="text-xl font-bold">{regulation.regulationTitle}</h3>
-            <p className="text-sm text-gray-600 mt-2">
-              {regulation.regulationDetails}
-            </p>
-
-            <div className="mt-4 flex justify-between">
-              <Button
-                value="Update"
-                onClick={() => handleUpdateConfirm(regulation)}
-              ></Button>
-              <Button
-                value="Delete"
-                className="bg-yellow-300 text-white"
-                onClick={() => {
-                  setCurrentRegulation(regulation);
-                  setDeleteModalOpen(true);
-                }}
-              />
-            </div>
-          </div>
-        ))}
-      </div> */}
-
-      <div className="bg-white py-10 sm:py-15">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:mx-0">
-            <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-              From the RHA Blogs
-            </h2>
-            <p className="mt-2 text-lg/8 text-gray-600">
-              Learn how to build nicely according to Rwanda Housing Authority.
-            </p>
-          </div>
-          <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            {regulations.map((post) => (
-              <article
-                key={post.id}
-                className="flex max-w-xl flex-col items-start justify-between"
-              >
-                <div className="flex items-center gap-x-4 text-xs">
-                  <time dateTime={post.datetime} className="text-gray-500">
-                    {/* {post.date} */}
-                    Mar 16, 2020
-                  </time>
-                  <a
-                    href="#"
-                    // {post.category.href}
-                    className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
-                  >
-                    {post.regulationTitle}
-                  </a>
-                </div>
-                <div className="group relative">
-                  <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
-                    <a href={post.href}>
-                      <span className="absolute inset-0" />
-                      {post.regulationTitle}
-                    </a>
-                  </h3>
-                  <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">
-                    {post.regulationDetails}
-                  </p>
-                </div>
-                <div className="relative mt-8 flex items-center gap-x-4">
-                  <img
-                    alt=""
-                    src={`${API_URL}/image/${post.regulationImagePath}`}
-                    className="h-10 w-10 rounded-full bg-gray-50"
-                  />
-                  <div className="text-sm/6">
-                    <p className="font-semibold text-gray-900">
-                      <a
-                        href="#"
-                        // {post.author.href}
-                      >
-                        <span className="absolute inset-0" />
-                        {/* {post.author.name} */}
-                        Blaise Mugisha
-                      </a>
-                    </p>
-                    <p className="text-gray-600">
-                      {/* {post.author.role} */}
-                      ADMIN
-                    </p>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </div>
-
+      {/* // In your render method: */}
+      {!selectedRegulation ? (
+        <RegulationsList
+          regulations={regulations}
+          onRegulationSelect={(regulation) => setSelectedRegulation(regulation)}
+        />
+      ) : (
+        <RegulationDetail
+          id={selectedRegulation.id}
+          regulation={selectedRegulation} // Pass the full regulation object
+          onBack={() => setSelectedRegulation(null)}
+          onDelete={handleDelete}
+          onUpdate={handleUpdateConfirm}
+        />
+      )}
       {modalOpen && (
         <AddRegulation
           onClose={() => setModalOpen(false)}
@@ -207,15 +132,13 @@ export const BuildingRegulationsDahboard = () => {
           }}
         />
       )}
-
       {editModal && (
         <UpdateRegulation
-          regulation={currentRegulation}
+          regulation={selectedRegulation}
           onClose={() => setEditModal(false)}
           onUpdateSuccess={handleUpdateSuccess}
         />
       )}
-
       {/* Delete Confirmation Modal */}
       {deleteModalOpen && (
         <Modal toggleFunction={() => setDeleteModalOpen(false)}>

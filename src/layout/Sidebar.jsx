@@ -2,20 +2,45 @@ import { Link } from "react-router-dom";
 import { sideBarLinks } from "../constants/sideBarLinks";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoLogOutOutline } from "react-icons/io5";
-
+import { navImage } from "../constants/images";
 const SideBar = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("role");
+    navigate("/login");
+  };
+
+  function removeSquareBrackets(str) {
+    return str.replace(/\[|\]/g, "");
+  }
+
+  const receivedRole = localStorage.getItem("role");
+  const cleanedRole = removeSquareBrackets(receivedRole);
+
+  const menuItems = sideBarLinks[cleanedRole] || [];
+
   return (
     <aside className="w-[20%] max-md:hidden max-w-[20%] py-6 px-8 flex flex-col gap-5 z-[9999] bg-whiteTheme-textColor text-whiteTheme-secondColor min-h-screen h-screen sticky">
-      <header>
+      <header className="flex items-center justify-around">
+        {/* <img
+          src={navImage.logoRha}
+          alt="logo"
+          className="w-[60px] h-[40px]"
+          onClick={() => {
+            // navigate("/");
+          }}
+        /> */}
         <h1 className="font-bold text-2xl">
           Build <span className="text-whiteTheme-primaryColor">Budget</span>
         </h1>
       </header>
       <main className="mt-10 relative h-full">
         <ul className="flex flex-col gap-7">
-          {sideBarLinks?.map((links, index) => (
+          {menuItems?.map((links, index) => (
             <li
               key={index}
               className={`${
@@ -36,7 +61,7 @@ const SideBar = () => {
       <footer className="bottom-0">
         <span
           className="flex gap-3 items-center pb-2 cursor-pointer hover:text-whiteTheme-primaryColor"
-          onClick={() => navigate("/login")}
+          onClick={handleLogout}
         >
           <IoLogOutOutline size={22} />
           <p>Logout</p>

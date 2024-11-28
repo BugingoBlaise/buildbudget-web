@@ -1,10 +1,12 @@
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Input from "../../../components/Inputs";
 import Button from "../../../components/Button";
 import { useNavigate } from "react-router-dom";
+
+const API_URL = "http://localhost:8080/api/auth";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,9 +16,71 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  function removeSquareBrackets(str) {
+    return str.replace(/\[|\]/g, "");
+  }
+  const onSubmit = async (data) => {
+    try {
+      const url = API_URL + "/login";
+      fetch(url, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: data.username,
+          password: data.password,
+        }),
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          }
+          throw new Error("Login failed");
+        })
+        .then((data) => {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("username", data.username);
+          localStorage.setItem("role", data.role);
+          console.log(data.role);
 
-  const onSubmit = (data) => {
-    console.log(data);
+          const receivedRole = data.role;
+          const cleanedRole = removeSquareBrackets(receivedRole);
+
+          switch (cleanedRole) {
+            case "ADMIN":
+              navigate("/accounts");
+              break;
+            case "CITIZEN":
+              navigate("/reports");
+              break;
+            case "SUPPLIER":
+              navigate("/materials");
+              break;
+            case "CONTRACTOR":
+              navigate("/contractors");
+              break;
+            default:
+              navigate("/dashboard");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast.error("Failed to Login. Please try again.", {
+            autoClose: 3000,
+            hideProgressBar: true,
+            position: "top-center",
+          });
+        });
+    } catch (e) {
+      console.log(e);
+      toast.error("An unexpected error occurred.", {
+        autoClose: 3000,
+        hideProgressBar: true,
+        position: "top-center",
+      });
+    }
   };
 
   return (
@@ -26,89 +90,83 @@ const LoginForm = () => {
           Login
         </h1>
         <p className="text-sm text-gray-700">
-          Access BudgetBuild using your crediantials here
+          Access BudgetBuild using your credentials here
         </p>
       </header>
       <form
-        action=""
-        // onSubmit={
-        //
-        // }
+        onSubmit={handleSubmit(onSubmit)}
+        encType="application/json"
         className="w-full flex flex-col gap-3"
       >
         <Controller
-          name="email"
+          name="username"
           control={control}
           defaultValue=""
-          rules={{ required: "Email is required" }}
-          render={({ field }) => {
-            return (
-              <div className="flex flex-col gap-1">
-                <label className="text-whiteTheme-textColor font-semibold text-base">
-                  Email
-                </label>
-                <div className="relative">
-                  <Input
-                    type="text"
-                    placeholder="Enter your email Address"
-                    {...field}
-                    className={`!border-2 !border-slate-300 !pl-4`}
-                  />
-                </div>
-                {errors.email && (
-                  <p className="text-red-600 text-[13px]">
-                    {errors.email.message}
-                  </p>
-                )}
+          rules={{ required: "Username is required" }}
+          render={({ field }) => (
+            <div className="flex flex-col gap-1">
+              <label className="text-whiteTheme-textColor font-semibold text-base">
+                Username
+              </label>
+              <div className="relative">
+                <Input
+                  type="text"
+                  placeholder="Enter your username"
+                  {...field}
+                  className={`!border-2 !border-slate-300 !pl-4`}
+                />
               </div>
-            );
-          }}
+              {errors.username && (
+                <p className="text-red-600 text-[13px]">
+                  {errors.username.message}
+                </p>
+              )}
+            </div>
+          )}
         />
         <Controller
           name="password"
           control={control}
           defaultValue=""
           rules={{ required: "Password is required" }}
-          render={({ field }) => {
-            return (
-              <div className="flex flex-col gap-1">
-                <label className="text-whiteTheme-textColor font-semibold text-base">
-                  Password
-                </label>
-                <div className="relative">
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
-                    {...field}
-                    className={`!border-2 !border-slate-300 !pl-4`}
-                  />
-                  <div
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <LuEye size={18} className="" />
-                    ) : (
-                      <LuEyeOff size={18} className="" />
-                    )}
-                  </div>
+          render={({ field }) => (
+            <div className="flex flex-col gap-1">
+              <label className="text-whiteTheme-textColor font-semibold text-base">
+                Password
+              </label>
+              <div className="relative">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  {...field}
+                  className={`!border-2 !border-slate-300 !pl-4`}
+                />
+                <div
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <LuEye size={18} className="" />
+                  ) : (
+                    <LuEyeOff size={18} className="" />
+                  )}
                 </div>
-                {errors.password && (
-                  <p className="text-red-600 text-[13px]">
-                    {errors.password.message}
-                  </p>
-                )}
               </div>
-            );
-          }}
+              {errors.password && (
+                <p className="text-red-600 text-[13px]">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+          )}
         />
         <Button
           value={<span className="flex items-center">{"Sign In"}</span>}
           className={"!w-full"}
-          onClick={() => navigate("/dashboard")}
+          type="submit"
         />
         <span className="flex items-center gap-2">
-          <p className="text-gray-600">Don’t have an account? </p>
+          <p className="text-gray-600">Don&apos;t have an account? </p>
           <p
             className="text-whiteTheme-primaryColor font-bold cursor-pointer"
             onClick={() => {

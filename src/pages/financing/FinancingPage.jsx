@@ -78,7 +78,25 @@ export const FinancingPage = () => {
         </div>
       </div>
     );
-  if (error) return <div>Error: {}</div>;
+  if (error) {
+    return (
+      <div className="p-4">
+        <div className="bg-red-50 border-l-4 border-red-500 p-4">
+          <div className="flex">
+            <div className="ml-3">
+              <p className="text-sm text-red-700">{error}</p>
+            </div>
+          </div>
+        </div>
+        <button
+          onClick={"#"}
+          className="mt-4 text-rose-500 hover:text-rose-600 font-medium"
+        >
+          ← Go Back
+        </button>
+      </div>
+    );
+  }
   return (
     <ContainerHolder className="flex flex-col p-6 bg-gray-100 min-h-screen">
       <div className="flex justify-between items-center mb-6">

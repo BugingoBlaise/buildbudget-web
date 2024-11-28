@@ -27,7 +27,12 @@ export const AccountsDashboard = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await axios.get(API_URL);
+      const response = await axios.get(API_URL, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
 
       const transformedData = response.data.map((user) => ({
         ...user,

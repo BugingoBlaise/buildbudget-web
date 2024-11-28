@@ -36,11 +36,26 @@ export const ReviewRates = () => {
         </div>
       </div>
     );
-  if (error) return <div>Error: {error}</div>;
+  if (error) {
+    return (
+      <div className="p-4">
+        <div className="bg-red-50 border-l-4 border-red-500 p-4">
+          <div className="flex">
+            <div className="ml-3">
+              <p className="text-sm text-red-700">{error}</p>
+            </div>
+          </div>
+        </div>
+        <button className="mt-4 text-rose-500 hover:text-rose-600 font-medium">
+          ← Go Back
+        </button>
+      </div>
+    );
+  }
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {contractors.map((contractor) => (
-        <ContractorCard key={contractor.id} contractor={contractor} />
+        <ContractorCard key={contractor?.id} contractor={contractor} />
       ))}
     </div>
   );

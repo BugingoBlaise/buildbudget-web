@@ -6,6 +6,7 @@ class LoanService {
     return axios.post(`${API_URL}/saveLoan`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
     });
   }
@@ -16,6 +17,7 @@ class LoanService {
     return axios.put(`${API_URL}/updateLoan/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
     });
   }

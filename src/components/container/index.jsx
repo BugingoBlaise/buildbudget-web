@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 const ContainerHolder = ({ children, className }) => {
   return (
     <div
-      className={`${className} w-full px-28 py-4 max-lg:px-20 max-md:px-20 max-sm:px-6`}
+      className={`${className} w-full px-32 py-4 max-lg:px-20 max-md:px-20 max-sm:px-6`}
     >
       {children}
     </div>

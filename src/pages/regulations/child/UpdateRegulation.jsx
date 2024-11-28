@@ -18,10 +18,12 @@ export const UpdateRegulation = ({ regulation, onClose, onUpdateSuccess }) => {
 
   useEffect(() => {
     if (regulation) {
-      setValue("regulationTitle", regulation.regulationTitle);
-      setValue("regulationDetails", regulation.regulationDetails);
-      if (regulation.regulationImage) {
-        setImagePreview(`data:image/jpeg;base64,${regulation.regulationImage}`);
+      setValue("regulationTitle", regulation?.regulationTitle);
+      setValue("regulationDetails", regulation?.regulationDetails);
+      if (regulation?.regulationImage) {
+        setImagePreview(
+          `data:image/jpeg;base64,${regulation?.regulationImage}`
+        );
       }
     }
   }, [regulation, setValue]);
@@ -41,7 +43,7 @@ export const UpdateRegulation = ({ regulation, onClose, onUpdateSuccess }) => {
       formData.append("regulationImage", data.image[0]);
     }
 
-    RegulationService.updateRegulation(regulation.id, formData)
+    RegulationService.updateRegulation(regulation?.id, formData)
       .then((response) => {
         onUpdateSuccess(response.data);
       })
@@ -61,7 +63,7 @@ export const UpdateRegulation = ({ regulation, onClose, onUpdateSuccess }) => {
         <Controller
           name="regulationTitle"
           control={control}
-          defaultValue={regulation.regulationTitle}
+          defaultValue={regulation?.regulationTitle}
           rules={{ required: "Regulation title is required" }}
           render={({ field }) => (
             <div className="flex flex-col gap-1">
@@ -72,6 +74,7 @@ export const UpdateRegulation = ({ regulation, onClose, onUpdateSuccess }) => {
                 type="text"
                 placeholder="Regulation Title"
                 {...field}
+                defaultValue={regulation?.regulationTitle}
                 className="!border-2 !border-slate-300 !pl-4"
               />
               {errors.regulationTitle && (
@@ -94,6 +97,7 @@ export const UpdateRegulation = ({ regulation, onClose, onUpdateSuccess }) => {
               <TextArea
                 {...field}
                 placeholder="Regulation details"
+                defaultValue={regulation.regulationDetails}
                 className="!border-whiteTheme-subPrimaryColor"
               />
             </div>

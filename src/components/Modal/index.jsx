@@ -4,10 +4,10 @@ import { IoClose } from "react-icons/io5";
 function Modal({ toggleFunction, children, className }) {
   return (
     <main
-      className={`fixed inset-0 flex items-center justify-center z-[100000] flex-col overflow-hidden`}
+      className={`fixed inset-0 flex items-center justify-center z-[100000] flex-col overflow-y-auto pt-10`}
     >
       <div
-        className="absolute inset-0 bg-gray-600 opacity-60 "
+        className="absolute inset-0 bg-gray-600 opacity-60 pt-10"
         onClick={toggleFunction}
       ></div>
       <div

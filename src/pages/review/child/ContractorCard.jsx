@@ -8,18 +8,25 @@ export const ContractorCard = ({ contractor, rating }) => {
       <img
         className="w-full h-32 object-cover"
         // src={contractor.profilePic}
-        src={`${API_URL}/image/${contractor.profilePic}`}
-        alt={contractor.companyName}
+        src={`${API_URL}/image/${contractor?.profilePic}`}
+        alt={contractor?.companyName}
         // onError={(e) => {
         //   e.target.src = "/api/placeholder/800/400";
         //   e.target.alt = "Placeholder image";
         // }}
       />
       <div className="px-6 py-4">
-        <div className="font-bold text-lg mb-2">{contractor.username}</div>
-        <Rating rating={contractor.review.rating} />{" "}
+        <div className="font-bold text-lg mb-2">{contractor?.companyName}</div>
+        <Rating rating={contractor?.averageRating} />{" "}
         {/* Pass rating to the Rating component */}
-        <p className="text-gray-600">{contractor.review.rating} out of 5</p>
+        <p className="text-gray-600">{contractor?.averageRating} out of 5</p>
+        <button
+          onClick={() => {
+            console.log(contractor?.review);
+          }}
+        >
+          click me
+        </button>
       </div>
     </div>
   );

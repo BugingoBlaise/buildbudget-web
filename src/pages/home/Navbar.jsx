@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../../components/Button";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { navLinks } from "../../constants/navLinks";
@@ -14,9 +14,36 @@ const Navbar = () => {
   const loginUser = localStorage.getItem("token");
   const userDetails = JSON.parse(localStorage.getItem("user"));
 
+  // Smooth scrolling function
+  const handleNavLinkClick = (e, path) => {
+    e.preventDefault();
+
+    // If it's a hash link (section)
+    if (path.startsWith("#")) {
+      const targetElement = document.querySelector(path);
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    } else {
+      // For regular navigation
+      navigate(path);
+    }
+  };
+
   const changeColor = () =>
     window.scrollY >= 10 ? setOnScroll(true) : setOnScroll(false);
-  window.addEventListener("scroll", changeColor);
+
+  // Add and remove scroll event listener
+  useEffect(() => {
+    window.addEventListener("scroll", changeColor);
+    return () => {
+      window.removeEventListener("scroll", changeColor);
+    };
+  }, []);
+
   return (
     <section className="grid grid-cols-1">
       <nav
@@ -36,9 +63,6 @@ const Navbar = () => {
             src={navImage.logoRha}
             alt="logo"
             className="w-[80px] h-[62px]"
-            onClick={() => {
-              // navigate("/");
-            }}
           />
           <h1 className="text-3xl font-bold text-gray-800">RHA</h1>
         </header>
@@ -50,9 +74,13 @@ const Navbar = () => {
               className={`${
                 link.path === "/" &&
                 "text-whiteTheme-subPrimaryColor font-semibold dark:text-darkTheme-secondColor"
-              } font-medium cursor-pointer hover:text-whiteTheme-subPrimaryColor dark:hover:text-darkTheme-secondColor `}
+              } font-medium cursor-pointer hover:text-whiteTheme-subPrimaryColor dark:hover:text-darkTheme-secondColor`}
             >
-              <a href={link.path} className={``}>
+              <a
+                href={link.path}
+                onClick={(e) => handleNavLinkClick(e, link.path)}
+                className=""
+              >
                 {link.name}
               </a>
             </li>
